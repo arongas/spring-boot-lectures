@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Spring Boot Lectures</title>
+		<style>
+			body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+h1, h2, h3 {
+	font-weight: 400;
+	margin-bottom: 0;
+}
+.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h2 { font-size: 2em; }
+.remark-slide-content h3 { font-size: 1.6em; }
+.footnote {
+	position: absolute;
+	bottom: 3em;
+}
+li p { line-height: 1.25em; }
+.red { color: #fa0000; }
+.large { font-size: 2em; }
+a, a > code {
+	color: rgb(249, 38, 114);
+	text-decoration: none;
+}
+code {
+	background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+}
+.remark-code, .remark-inline-code { font-family: "Bitstream Vera Sans Mono", "Courier", monospace; }
+.remark-code-line-highlighted     { background-color: #373832; }
+.pull-left {
+	float: left;
+	width: 47%;
+}
+.pull-right {
+	float: right;
+	width: 47%;
+}
+.pull-right ~ p {
+	clear: both;
+}
+#slideshow .slide .content code {
+	font-size: 0.8em;
+}
+#slideshow .slide .content pre code {
+	font-size: 0.9em;
+	padding: 15px;
+}
+.main-title, .title {
+	background: #272822;
+	color: #777872;
+	text-shadow: 0 0 20px #333;
+}
+.title h1, .title h2, .main-title h1, .main-title h2 {
+	color: #f3f3f3;
+	line-height: 0.8em;
+}
+/* Custom */
+remark-slide{
+	background-color: #9bbcf2;
+}
+
+blockquote {
+  position: relative;
+  padding-left: 1em;
+  border-left: 0.2em solid #4d91b3;
+  margin-bottom: 3em;
+}
+blockquote:before, blockquote:after {
+  content: '\201C';
+  color: #4d91b3;
+}
+blockquote:after {
+  content: '\201D';
+}
+
+.remark-slide-content {
+    background-color: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: table-cell;
+    font-size: 22px;
+    padding: 1em 4em 1em 4em;
+}
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
+# Spring Boot Lectures
+
+---
+## Prerequisites
+
+1. IntelliJ IDEA
+1. Java 8
+1. ElasticSearch 
+1. ActiveMQ
+1. PostgreSQL
+1. Postman 
+1. GIT
+
+
+---
+## GIT
+The presentations and code can be found at git: https://github.com/arongas/spring-boot-lectures.git 
+
+Useful GIT commands:
+
+
+- Download complete lecture material from GIT: 
+
+`git clone https://github.com/arongas/spring-boot-lectures.git`
+
+
+---
+class: center, middle, main-title
+
+# Lectures
+
+---
+## Lecture 1 - Introduction to Spring boot
+Purpose of this lecture is to get a first/quick introduction of what is Spring Boot and its features. 
+
+Two small projects will be created during this course, via Spring Initializr.  The first project will be a hello word web application. Within this project the basic spring boot capabilities will be discussed and explained.
+
+The second project will be made slightly more complex by connecting with Elasticsearch as a database and exposing a domain object over rest. The purpose here will not be to understand spring data or spring data rest but introduce a proposed project structure and explain further auto configuration and spring boot property files.
+
+By the end of the lecture audience is expected to be able to create it own project understand the structure of spring boot and be able to run it.
+
+Lecture 1 also has 1 exercise which should be done after the completion of 1st lecture.
+
+
+		</textarea>
+		<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
+		<script>
+			var slideshow = remark.create();
+		</script>
+		<script></script>
+	</body>
+</html>
