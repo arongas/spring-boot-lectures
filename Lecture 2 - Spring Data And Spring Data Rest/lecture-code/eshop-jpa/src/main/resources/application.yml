@@ -1,0 +1,32 @@
+server:
+  port: 9090 # Set the server's port
+  servlet:
+    context-path: /jpa  # Set context path of application server
+spring:
+  application:
+    name: e-shop  # Set the application name
+  data:
+    rest:
+      base-path: api
+    jpa:
+      repositories:
+        enabled: true
+  datasource:
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+    url: jdbc:postgresql://localhost:5432/eshop
+    username: eshop
+    password: eshop@@@
+  jpa:   #JPA properties
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    open-in-view: false   # Significant attribute. Dont open transaction at controller entry point
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
