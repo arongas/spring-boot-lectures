@@ -7,7 +7,25 @@ spring:
     name: Library Management System
   data:
     elasticsearch:
-      cluster-nodes: localhost:9300
+      cluster-nodes: ${ELASTICSEARCH_URL:localhost}:9300
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:5432/${POSTGRES_DB:library}
+    username: ${POSTGRES_USER:library}
+    password: ${POSTGRES_PASSWORD:library@@@}
+    platform: POSTGRESQL
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    show-sql: false
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: false
 
 
 

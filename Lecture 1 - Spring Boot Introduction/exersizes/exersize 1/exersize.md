@@ -6,11 +6,11 @@ Purpose: Understand how to setup a spring boot project and how this can be execu
 
 ## Description
 
-You wish to create a simple Library Management System where users can add or find details about resources.  A resource can be of media type book, a magazine or DVD. The data that can be saved into the system are the following:
+You wish to create a simple Library Management System where users can add or find details about resources.  A resource can be of media type: book, magazine or DVD. The data that can be saved into the system are the following:
 
 ```json
 {
-   "tracking_id": "trucking id added as a sticker on the media resource",
+   "tracking_id": "tracking id added as a sticker on the media resource",
    "type": "media type (book or magazine or dvd)",
    "name": "media name, i.e. title of book",
    "author": "author of book",
@@ -19,7 +19,7 @@ You wish to create a simple Library Management System where users can add or fin
 }
 ```
 
-You should create a java web application that allows adding into elastic search such information and allowing this information to be accessed using the tracking id or the type of the book or the name of the book.
+You should create a java web application that allows adding into elasticsearch such information and allowing this information to be accessed using the tracking id or the type of the book or the name of the book.
 
 ## Requirements 
 

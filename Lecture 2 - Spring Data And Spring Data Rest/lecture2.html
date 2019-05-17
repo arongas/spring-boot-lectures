@@ -1,43 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Spring Data and Spring Data Rest</title>
+		<style>
+			body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+h1, h2, h3 {
+	font-weight: 400;
+	margin-bottom: 0;
+}
+.remark-slide-content h1 { font-size: 3em; }
+.remark-slide-content h2 { font-size: 2em; }
+.remark-slide-content h3 { font-size: 1.6em; }
+.footnote {
+	position: absolute;
+	bottom: 3em;
+}
+li p { line-height: 1.25em; }
+.red { color: #fa0000; }
+.large { font-size: 2em; }
+a, a > code {
+	color: rgb(249, 38, 114);
+	text-decoration: none;
+}
+code {
+	background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+}
+.remark-code, .remark-inline-code { font-family: "Bitstream Vera Sans Mono", "Courier", monospace; }
+.remark-code-line-highlighted     { background-color: #373832; }
+.pull-left {
+	float: left;
+	width: 47%;
+}
+.pull-right {
+	float: right;
+	width: 47%;
+}
+.pull-right ~ p {
+	clear: both;
+}
+#slideshow .slide .content code {
+	font-size: 0.8em;
+}
+#slideshow .slide .content pre code {
+	font-size: 0.9em;
+	padding: 15px;
+}
+.main-title, .title {
+	background: #272822;
+	color: #777872;
+	text-shadow: 0 0 20px #333;
+}
+.title h1, .title h2, .main-title h1, .main-title h2 {
+	color: #f3f3f3;
+	line-height: 0.8em;
+}
+/* Custom */
+remark-slide{
+	background-color: #9bbcf2;
+}
+
+blockquote {
+  position: relative;
+  padding-left: 1em;
+  border-left: 0.2em solid #4d91b3;
+  margin-bottom: 3em;
+}
+blockquote:before, blockquote:after {
+  content: '\201C';
+  color: #4d91b3;
+}
+blockquote:after {
+  content: '\201D';
+}
+
+.remark-slide-content {
+    background-color: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: table-cell;
+    font-size: 22px;
+    padding: 1em 4em 1em 4em;
+}
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+class: center, middle, main-title
+
 # Spring Data and Spring Data Rest
 
-## Spring Data framework 
-
+---
+## Spring Data framework
 Spring Data: https://spring.io/projects/spring-data
 
 Spring Data’s mission is to provide a familiar and consistent, Spring-based programming model for data access while still retaining the special traits of the underlying data store.
 
 It makes it easy to use data access technologies, relational and non-relational databases, map-reduce frameworks, and cloud-based data services. 
 
+
+---
 ### Features
 
 - Dynamic query derivation from repository method names
-
 - Support for transparent auditing (created, last changed)
-
 - Possibility to integrate custom repository code
-
 - Advanced integration with Spring MVC controllers
-
 - Data Pagination
 
+
 ---
-
-  
-
 ## Most common Spring Data projects
 
 - [Spring Data JPA](https://spring.io/projects/spring-data-jpa) - Spring Data repository support for JPA.
-
 - [Spring Data MongoDB](https://spring.io/projects/spring-data-mongodb) - Spring based, object-document support and repositories for MongoDB.
-
 - [Spring Data REST](https://spring.io/projects/spring-data-rest) - Exports Spring Data repositories as hypermedia-driven RESTful resources.
-
 - [Spring Data Elasticsearch](https://spring.io/projects/spring-data-elasticsearch) - Spring Data module for Elasticsearch.
 
+
 ---
+class: center, middle, main-title
 
 # Spring Data JPA
 
+---
 ## Features
 
 - Ready made CRUD provided functionality
@@ -47,22 +161,19 @@ It makes it easy to use data access technologies, relational and non-relational 
 - Support for [Querydsl](http://www.querydsl.com/) predicates and thus type-safe JPA queries
 - Pagination support, dynamic query execution, ability to integrate custom data access code
 
-  
 
 ---
-
 ## Development time
-
 > Start from eshop code of first lecture. Alternatively one may wish to start from spring initilizr as an exercise. In the latter case please add  jpa, postgresql web and lombok   .
 
 The build.gradle ends up as follows:
 
----
 
+---
 ```groovy
 plugins {
-	id 'org.springframework.boot' version '2.1.4.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'java'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -72,31 +183,29 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.postgresql:postgresql'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 ```
 
 ---
-
 ## Configuring Postgresql connection and jpa
-
 ```yaml
 server:
   port: 9090 # Set the server's port
@@ -106,7 +215,6 @@ server:
 ```
 
 ---
-
 ```yaml
 ...
 spring:
@@ -138,9 +246,7 @@ spring:
 ```
 
 ---
-
 ## Domain object
-
 ```java
 package gr.rongasa.eshop.domain;
 import lombok.*;
@@ -170,9 +276,7 @@ public class Inventory {
 ```
 
 ---
-
 ## Repository
-
 ```java
 import gr.rongasa.eshop.domain.Inventory;
 import org.springframework.data.domain.Page;
@@ -186,9 +290,7 @@ public interface InventoryRepository extends JpaRepository<Inventory,Long> {
 ```
 
 ---
-
 ## Configuration
-
 ```java
 package gr.rongasa.eshop.configuration;
 
@@ -210,46 +312,34 @@ public class DatabaseConfiguration {
 }
 ```
 
+---
 ## Result
 
 - The conversion from Spring Data elasticSearch to spring data JPA is done. This is what is meant with familiar and **consistent** model for data layer access.
-
 - We could allow the concurrent existence  of elasticSearch and JPA connection
-
 - We changed domain id from String to Long. Elastic search performs better/easier with String id while 
 
+
 ---
-
 ## Means of database Queries
-
 The repository proxy has two ways to derive a store-specific query from the method name:
 
-  - By deriving the query from the method name directly.
-  - By using a manually defined query.
+
+- By deriving the query from the method name directly.
+- By using a manually defined query.
+
 
 ---
-
 ## Query from method name
 
-- 
-  findFirst/ findTop
-
+- findFirst/ findTop
 - findAllBy or findBy
-
 - distinct
-
 - existsBy
-
 - delete
-
 - count
-
 - orderBy
-
-  - asc, desc
-
-  
-
+ - asc, desc
 
 e.g.
 
@@ -260,22 +350,17 @@ void deleteByType(String type);
 boolean existsByType(String type);
 long countByType(String type);
 ```
-----
 
-  ## Supported method Names keywords
-
-  
-
-| Keyword    | Keyword          | Keyword           | Keyword |
-| ---------- | ---------------- | ----------------- | -------|
-| And        | LessThan         | After             | Like   |
-| Or         | LessThanEqual    | Before            | NotLike |
-| Is, Equals | GreaterThan      | IsNull            | StartingWith |
-| Between    | GreaterThanEqual | IsNotNull,NotNull | EndingWith   |
-| Containing | OrderBy          | Not               | In         |
-| NotIn      | True             | False             | IgnoreCase   |
-
-
+---
+## Supported method Names keywords
+|  Keyword |  Keyword |  Keyword |  Keyword | 
+|--|--|--|--|
+|  And |  LessThan |  After |  Like | 
+|  Or |  LessThanEqual |  Before |  NotLike | 
+|  Is, Equals |  GreaterThan |  IsNull |  StartingWith | 
+|  Between |  GreaterThanEqual |  IsNotNull,NotNull |  EndingWith | 
+|  Containing |  OrderBy |  Not |  In | 
+|  NotIn |  True |  False |  IgnoreCase | 
 
 ```java
 
@@ -289,9 +374,7 @@ long countByType(String type);
 ```
 
 ---
-
-## Query 
-
+## Query
 JPQL or native queries are supported in spring data repositories
 
 e.g.
@@ -309,29 +392,22 @@ Inventory getInventoryByNamedParam(@Param("descr") String description);
 ```
 
 ---
-
 > Propose to avoid this method. However, although spring data provides practically almost everything, sometimes JPA query may be the only way.
->
-> * Hard to move from one database engine to another
->
-> * Less readable
->
-> * More difficult to detect issues before running the application
->
->   One reason that query may be needed is when we wish to query something like the following 
->   `(entity.x=:a OR entity.x=:b) AND (entity.y=:c OR entity.y=:d)`
+> 
+> 
+> - Hard to move from one database engine to another
+> - Less readable
+> - More difficult to detect issues before running the application
+> One reason that query may be needed is when we wish to query something like the following 
+> `(entity.x=:a OR entity.x=:b) AND (entity.y=:c OR entity.y=:d)`
+
 
 ---
-
 ## Entity Graph
 
 - *ToMany relationships are lazy fetch. This means you cannot get i.e. the members without a transaction
-
 - Repository methods open a transaction inside method call and close it after method exit.
-
 - EntityGraph is a performant way of eagerly fetching inner entities after repository method returns
-
-  
 
 ```java
 @Entity
@@ -343,9 +419,6 @@ public class GroupInfo {
   …
 }
 ```
-
-
-
 ```java
 @Repository
 public interface GroupRepository extends CrudRepository<GroupInfo, String> {
@@ -356,12 +429,8 @@ public interface GroupRepository extends CrudRepository<GroupInfo, String> {
 ```
 
 ---
-
 ## Named Entity Graph
-
 Instead of constructing and using EntityGraph inside repository we can create named entity graphs and then use these inside our repository
-
-
 
 ```java
 @Entity
@@ -379,7 +448,6 @@ public class GroupInfo {
   …
 }
 ```
-
 ```java
 @Repository
 public interface GroupRepository extends CrudRepository<GroupInfo, String> {
@@ -390,10 +458,9 @@ public interface GroupRepository extends CrudRepository<GroupInfo, String> {
 ```
 
 ---
-
 ## Common Mistakes/Improvements
-
 JPA prerequisite information
+
 
 - @OneToOne: Eager fetch
 - @OneToMany: Lazy fetch
@@ -401,56 +468,43 @@ JPA prerequisite information
 
 Attention:
 
-- Bidirectional relationships during update and submit and first level cache.
 
+- Bidirectional relationships during update and submit and first level cache.
 - Take special care with equals, hashCode and toString overrides at entity level when having relationships (especially now with lombok)
-  - Danger of stack overflow
-  - Danger of performance issues simply when adding just a log line
-  
+ - Danger of stack overflow
+ - Danger of performance issues simply when adding just a log line
 - private methods annotated with transaction will not cope into opening a transaction
 
----
 
+---
 ## Common Mistakes/Improvements
 
-  
-
 - Use transactions at Service level at most
-  
 - Mapping of database entities into data transfer objects a good way of controlling transactions 
-  
-  - Only get from entity what is needed
-  - Set into entity before saving into database bidirectional relationships
-  
+ - Only get from entity what is needed
+ - Set into entity before saving into database bidirectional relationships
 - Usage of EntityGraph a good way of keeping transaction as small as possible
-
 - When using relational database utilize   database versioning and migration tools like Liquidbase or Flyway
+ - Don&#39;t skip this test as migrating from one version to another will be problematic without these tools and also it is harder to introduce these tools at next stage.
 
-  - Don't skip this test as migrating from one version to another will be problematic without these tools and also it is harder to introduce these tools at next stage.
 
 ---
-
 ## Spring Data Rest
-
 Spring Data Rest is an extension of Spring Data that exposes over REST the spring data methods that exist in spring data repositories.
 
 > - Impressive at first look and usefullt for rapid programming
 > - Use it only for testing, development, prototype or only when product is really simple
->   - If used in bigger products you bind domain model with rest consumer. Architecturally wise this is huge mistake that sooner or latter will add bigger complexity.
->   - Spring data rest is the best demonstration of HATEOAS
->
-> 
+>  - If used in bigger products you bind domain model with rest consumer. Architecturally wise this is huge mistake that sooner or latter will add bigger complexity.
+>  - Spring data rest is the best demonstration of HATEOAS
+
 
 ---
-
 ## Spring Data Rest
-
 Add in gradle the following dependency
 
 ```groovy
 implementation 'org.springframework.boot:spring-boot-starter-data-rest'
 ```
-
 Add in all custom repository methods that you wish to expose over rest and have method parameters the @Param annotation.
 
 ```java
@@ -459,7 +513,6 @@ public interface GroupInfoRepository extends JpaRepository<GroupInfo,Long> {
     Page<GroupInfo> findAllByMembersName(@Param("name") String name, Pageable page);
 }
 ```
-
 Add the spring data rest path in application.yml
 
 ```yaml
@@ -469,13 +522,10 @@ data:
 ```
 
 ---
-
-## Spring Data Rest - HATEOAS 
-
+## Spring Data Rest - HATEOAS
 ```cobol
   curl -X GET http://localhost:9090/jpa/api
 ```
-
 Notice that spring data repositories are exposed over rest.
 
 ```json
@@ -502,17 +552,13 @@ Notice that spring data repositories are exposed over rest.
 
 ---
 ## HATEOAS/HAL
-
-> 
->
 > - Spring data REST exposes all entities using HATEOAS.
 > - HATEOAS is a REST API architecture concept which defines that REST resource models include hypermedia links in such a way that clients can navigate to the complete Rest Interface.
 > - Clients may start from root context path and by following hateoas link names expose the complete API.
 
+
 ---
-
 ## Spring Data REST
-
 ```json
   "inventories": {
         "href": "http://localhost:9090/jpa/api/inventories{?page,size,sort}",
@@ -521,10 +567,10 @@ Notice that spring data repositories are exposed over rest.
 ```
 tempalated means that page, size, sort are part of query template. 
 
-i.e. http://localhost:9090/jpa/api/inventories?page=1&size=10&sort=id,asc
+i.e. http://localhost:9090/jpa/api/inventories?page=1&amp;size=10&amp;sort=id,asc
+
 
 ---
-
 ```json
 {
     "_embedded": { "inventories": [] },
@@ -558,14 +604,12 @@ i.e. http://localhost:9090/jpa/api/inventories?page=1&size=10&sort=id,asc
 ```
 
 ---
-
 ## Create new object
-
 ```javascript
 curl -X POST http://localhost:9090/jpa/api/inventories -H 'Content-Type: application/json' 
 
   -d '{
-	"name": "book",
+    "name": "book",
     "amount": 10,
     "description": "custom rwritten book",
     "type": "book",
@@ -574,7 +618,6 @@ curl -X POST http://localhost:9090/jpa/api/inventories -H 'Content-Type: applica
 ```
 
 ---
-
 Result
 
 ```json
@@ -595,14 +638,14 @@ Result
 }
 ```
 
+---
 ## Update new Object
-
 ```javascript
 curl -X PUT \
   http://localhost:9090/jpa/api/inventories/3 \
   -H 'Content-Type: application/json' \
   -d '{
-	"name": "book",
+    "name": "book",
     "amount": 10,
     "description": "custom rwritten book",
     "type": "book",
@@ -611,9 +654,6 @@ curl -X PUT \
 ```
 
 ---
-
-
-
 ```json
 {
     "name": "book",
@@ -633,19 +673,14 @@ curl -X PUT \
 ```
 
 ---
-
 ## Search hypermedia link
 
 - Ensure you have added in spring data custom repository method @Param@Paramannotation at method parameters
-
 - After creating an Inventory object locate hypermedia link named search and make a GET request.
+i.e. http://localhost:9090/jpa/api/inventories/search
 
-  i.e. http://localhost:9090/jpa/api/inventories/search
 
-  
-
-  ---
-
+---
   All custom methods created are exposed and can be used
 
 ```java
@@ -672,7 +707,6 @@ curl -X PUT \
 ```
 
 ---
-
 ## Spring Data REST Tips And Tricks
 
 - You can annotate as @RestResource(exported = false) a Repository (method) to define it as not exposed over web
@@ -681,7 +715,7 @@ curl -X PUT \
 ```java
 @Configuration
 public class RestConfiguration {
-    
+
     @Bean
     public RepositoryRestConfigurer repositoryRestConfigurer() {
         return new RepositoryRestConfigurer() {
@@ -701,11 +735,11 @@ public class RestConfiguration {
 ```groovy
 implementation 'org.springframework.data:spring-data-rest-hal-browser'
 ```
-
 Now open the Spring Data Rest base url via browser and check the result.
 
-## Spring Data tips and tricks
 
+---
+## Spring Data tips and tricks
 You can load initial data via CommandLineRunner
 
 ```java
@@ -724,45 +758,41 @@ public class DatabaseDataInitialization implements CommandLineRunner {
 }
 ```
 
+---
 ## Spring Data MongoDB
 
 - Lets switch this project now to NoSQL/MongoDB.
-
 - This way we have seen the same project in ElasticSearch, in JPA(Postgresql) and MongoDB
 
----
 
+---
 ### Prepare Dependencies
 
-- In gradle remove 'org.springframework.boot:spring-boot-starter-data-jpa' and 'org.postgresql:postgresql'  from dependencies
-
-- In gradle add 'org.springframework.boot:spring-boot-starter-data-mongodb' as dependency
-
-  ### Prepare Domain model
-
+- In gradle remove &#39;org.springframework.boot:spring-boot-starter-data-jpa&#39; and &#39;org.postgresql:postgresql&#39;  from dependencies
+- In gradle add &#39;org.springframework.boot:spring-boot-starter-data-mongodb&#39; as dependency
+ ---
+### Prepare Domain model
 - In Domain objects replace @Entity, @Table with @Document
-
 - In Domain objects remove @GeneratedValue and @ManyToMany, @OneToOne
-
 - In Domain objects replace id of type Long with String, BigInteger, or ObjectID
-
 - Remove from Domain objects and repositories anything that has to do with EntityGraph (@EntityGraph and @NamedEntityGraph)
 
-  
 
-  ---
-
-  ### Prepare Repositories
+---
+### Prepare Repositories
 
 - In repositories replace JpaRepository interface with MongoRepository
-
 - In repositories remove Modifying queries
-
 - In Repositories native queries are not considered (all queries are native)
-
 - In Repositories modify jpa queries to match mongodb query language 
-
 - In database configuration replace EnableJpaRepositories with EnableMongoRepositories
 
-  
 
+		</textarea>
+		<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
+		<script>
+			var slideshow = remark.create();
+		</script>
+		<script></script>
+	</body>
+</html>
