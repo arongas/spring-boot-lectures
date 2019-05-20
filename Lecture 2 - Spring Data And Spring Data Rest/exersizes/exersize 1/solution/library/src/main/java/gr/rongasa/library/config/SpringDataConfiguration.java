@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(value = "gr.rongasa.library.repository.jpa")
 @EnableElasticsearchRepositories (value = "gr.rongasa.library.repository.elasticsearch")
 public class SpringDataConfiguration {
+
 }

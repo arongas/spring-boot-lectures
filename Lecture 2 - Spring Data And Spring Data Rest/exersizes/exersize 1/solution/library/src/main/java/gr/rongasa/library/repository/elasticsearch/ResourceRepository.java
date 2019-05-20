@@ -11,25 +11,27 @@ public interface ResourceRepository extends ElasticsearchRepository<Resource, St
 
     Page<Resource> findByName(Pageable pageable, String name);
 
-//    @Override
-//    <S extends Resource> S save(S entity);
-//
-//    @Override
-//    <S extends Resource> Iterable<S> saveAll(Iterable<S> entities);
-//
-//    @RestResource(exported = false)
-//    @Override
-//    void deleteById(String s);
-//
-//    @RestResource(exported = false)
-//    @Override
-//    void delete(Resource entity);
-//
-//    @RestResource(exported = false)
-//    @Override
-//    void deleteAll(Iterable<? extends Resource> entities);
-//
-//    @RestResource(exported = false)
-//    @Override
-//    void deleteAll();
+    @RestResource(exported = false)
+    @Override
+    <S extends Resource> S save(S entity);
+
+    @RestResource(exported = false)
+    @Override
+    <S extends Resource> Iterable<S> saveAll(Iterable<S> entities);
+
+    @RestResource(exported = false)
+    @Override
+    void deleteById(String s);
+
+    @RestResource(exported = false)
+    @Override
+    void delete(Resource entity);
+
+    @RestResource(exported = false)
+    @Override
+    void deleteAll(Iterable<? extends Resource> entities);
+
+    @RestResource(exported = false)
+    @Override
+    void deleteAll();
 }

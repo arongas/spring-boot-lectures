@@ -13,16 +13,18 @@ spring:
     jpa:
       repositories:
         enabled: true
+    rest:
+      base-path: data
   datasource:
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 5
-    url: jdbc:postgresql://localhost:5432/eshop
-    username: eshop
-    password: eshop@@@
+    url: jdbc:postgresql://localhost:5432/library
+    username: library
+    password: library@@@
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
@@ -32,4 +34,5 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-debug: true
+  flyway:
+    locations: classpath:db/migration

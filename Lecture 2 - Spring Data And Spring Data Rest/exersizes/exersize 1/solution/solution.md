@@ -6,11 +6,11 @@ Use Spring Initialzr, to setup the project.  You need to add the following depen
 
 1. Web
 2. Elasticsearch
-3. Lombok
-
----
-
-![](assets/initializr.png)
+3. JPA
+4. REST
+5. Postgresql
+6. Lombok
+7. Flyway
 
 ---
 

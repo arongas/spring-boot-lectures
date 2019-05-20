@@ -1,6 +1,6 @@
 package gr.rongasa.library.web.rest;
 
-import gr.rongasa.library.service.ResourceServiceImpl;
+import gr.rongasa.library.service.ResourceService;
 import gr.rongasa.library.domain.dto.ResourceDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(path = "resource", produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class ResourceController {
-    public final ResourceServiceImpl resourceService;
+    public final ResourceService resourceService;
 
     @GetMapping
     public ResponseEntity<Page<ResourceDTO>> resources(Pageable pageable) {
@@ -68,5 +68,12 @@ public class ResourceController {
         } else {
             return resourceService.update(resource).map(ResponseEntity::ok).orElse(ResponseEntity.status(INTERNAL_SERVER_ERROR).build());
         }
+    }
+
+
+    @PostMapping("resynch")
+    public ResponseEntity<?> resycnh(){
+        resourceService.reSynch();
+        return ResponseEntity.noContent().build();
     }
 }
