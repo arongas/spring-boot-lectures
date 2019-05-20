@@ -1,4 +1,4 @@
-package gr.rongasa.library.domain;
+package gr.rongasa.library.domain.elasticsearch;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,7 @@
-package gr.rongasa.library.service.mapper;
+package gr.rongasa.library.service.mapper.elasticsearch;
 
-import gr.rongasa.library.domain.Resource;
-import gr.rongasa.library.web.dto.ResourceDTO;
+import gr.rongasa.library.domain.elasticsearch.Resource;
+import gr.rongasa.library.domain.dto.ResourceDTO;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

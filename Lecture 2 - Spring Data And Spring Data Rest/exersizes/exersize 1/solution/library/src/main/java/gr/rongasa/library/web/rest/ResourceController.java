@@ -1,7 +1,7 @@
 package gr.rongasa.library.web.rest;
 
 import gr.rongasa.library.service.ResourceServiceImpl;
-import gr.rongasa.library.web.dto.ResourceDTO;
+import gr.rongasa.library.domain.dto.ResourceDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
