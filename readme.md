@@ -9,10 +9,9 @@
 3. ElasticSearch 
 4. ActiveMQ
 5. PostgreSQL
-6. Postman 
-7. GIT
-
-
+6. MongoDB
+7. Postman 
+8. GIT
 
 ## GIT
 
@@ -42,4 +41,14 @@ By the end of the lecture audience is expected to be able to create it own proje
 
 
 
-Lecture 1 also has 1 exercise which should be done after the completion of 1st lecture.
+Lecture 1 also has 1 exercise which should be done after the completion of 1st lecture.  In this exercise, audience will also be introduced with the proper way of mapping DTO to database entities using MapStruct.
+
+---
+
+## Lecture 2 - Spring Data And Spring Data Rest
+
+Purpose of this lecture is to introduce user with Spring Data and Spring Data Rest.  User will be introduced with the means to connect with JPA (postgresql) and with NoSQL (MongoDB) database. A set of queries will be used/exposed here via spring repositories. As a next step, audience will be introduced with the concept of Spring Data Rest.
+
+By the end of the lecture audience is expected to have a good understanding of Spring Data and Spring Data Rest. 
+
+Lecture 2 also has 1 exercise which should be done after the completion of lecture 2. In this exercise, audience will also be introduced with the proper way of creating and updating application's schema and initial data.

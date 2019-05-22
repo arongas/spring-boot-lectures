@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4d60ad82-43e6-46e6-a550-cceb87c04bff",
+		"_postman_id": "7f591c72-686b-4739-b36d-8836a583d3e4",
 		"name": "library",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -10,10 +10,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8081/library/resource",
 					"protocol": "http",
@@ -30,14 +26,31 @@
 			"response": []
 		},
 		{
+			"name": "resynch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/library/resource/resynch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"library",
+						"resource",
+						"resynch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "find by id",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8081/library/resource/id?id=95526d6b-1395-4e0f-9b5e-648b9afdb6d2",
 					"protocol": "http",
@@ -65,10 +78,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8081/library/resource/type?type=book",
 					"protocol": "http",
@@ -96,10 +105,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://localhost:8081/library/resource/name?name=Spring 5",
 					"protocol": "http",
@@ -219,10 +224,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "localhost:9200/resource/_search",
 					"host": [

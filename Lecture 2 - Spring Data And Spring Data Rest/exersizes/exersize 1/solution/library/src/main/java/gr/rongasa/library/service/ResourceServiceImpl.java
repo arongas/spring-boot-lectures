@@ -78,7 +78,9 @@ public class ResourceServiceImpl implements ResourceService {
             Pageable pageable= PageRequest.of(page++,10);
             resourcePage=jpaResourceRepository.findAll(pageable);
             resourceRepository.deleteAll();
-            resourceRepository.saveAll(resourcePage.stream().map(jpaResourceMapper::resourceToResourceDTO).map(resourceMapper::resourceDTOToResource).collect(Collectors.toList()));
+            if (resourcePage.getSize()>0){
+                resourceRepository.saveAll(resourcePage.stream().map(jpaResourceMapper::resourceToResourceDTO).map(resourceMapper::resourceDTOToResource).collect(Collectors.toList()));
+            }
         }while (resourcePage.hasNext());
 
     }

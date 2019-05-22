@@ -1,0 +1,19 @@
+body {
+    padding: 15rem;
+}
+.starter-template {
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
+h1{
+    color:darkblue;
+}
+
+h2{
+    color:blue;
+}
+
+.list{
+    color: darkgray;
+}

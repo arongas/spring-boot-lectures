@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>Hello ${name} from Spring Boot</title>
+
+        <link rel="stylesheet" th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+        <script type="text/javascript" th:src="@{webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    </head>
+
+    <body>
+
+
+    <main role="main" class="container">
+
+        <div class="starter-template">
+            <h1>Spring Boot Web Thymeleaf Example</h1>
+            <h2>
+                <span th:text="'Hello, ' + ${name}"></span>
+            </h2>
+        </div>
+        <div>Greeted: </div>
+        <ol>
+            <li class="list" th:each="name : ${names}" th:text="${name}"></li>
+        </ol>
+
+    </main>
+
+    </body>
+
+</html>
+
+
