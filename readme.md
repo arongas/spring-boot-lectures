@@ -52,3 +52,9 @@ Purpose of this lecture is to introduce user with Spring Data and Spring Data Re
 By the end of the lecture audience is expected to have a good understanding of Spring Data and Spring Data Rest. 
 
 Lecture 2 also has 1 exercise which should be done after the completion of lecture 2. In this exercise, audience will also be introduced with the proper way of creating and updating application's schema and initial data.
+
+---
+
+## Lecture 3 - Web, Logging, Properties, Profiles,  and Actuator Endpoints
+
+Purpose of this lecture is to introduce User with the capabilities of Spring Boot of handling MVC web application development with the help of Thymeleaf. Being aware that most probably Spring Boot applications will be Restfull web applications serving Vue or Angular frontend, this lecture acts as an introduction and as a stepping Stone for Lecture 4.  Apart from Spring boot web, in this lecture logging spring boot property files and actuator endpoints features are explained.
