@@ -181,6 +181,75 @@ h2{
 </html>
 ```
 
+---
+
+## Internationalization
+
+In one configuration class we need to configure the following:
+
+- The application's message source
+
+```java
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:i18n/messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
+```
+
+- The locale resolver in order to be able to determine which locale is currently used into the session
+
+```java
+   @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver slr = new SessionLocaleResolver();
+        slr.setDefaultLocale(Locale.US);
+        return slr;
+    }
+```
+
+---
+
+- The bean through which one can change the selected language
+
+```java
+@Bean
+public LocaleChangeInterceptor localeChangeInterceptor() {
+    LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+    lci.setParamName("lang");
+    return lci;
+}
+```
+
+---
+
+- Add Locale interceptor into the applications interceptor registry
+
+  ```java
+  @Configuration
+  public class InternationalizationConfiguration implements WebMvcConfigurer {
+      ...
+      @Override
+          public void addInterceptors(InterceptorRegistry registry) {
+              registry.addInterceptor(localeChangeInterceptor());
+          }
+  }
+  ```
+
+  - Add messages_xx.properties files in i18n folder (as configured in the message source bean)
+
+  - Use this in view part i.e. 
+
+    ```html
+    <span th:text="#{header_label}">
+    ```
+
+    
+
+---
+
 ## Actuator Endpoints
 
 - Spring Boot micro services, need to allow other systems to monitor and interact with the application.  
