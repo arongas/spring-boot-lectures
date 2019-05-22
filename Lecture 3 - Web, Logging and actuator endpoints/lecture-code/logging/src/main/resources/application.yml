@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: e-shop
+  data:
+    elasticsearch:
+      cluster-nodes: localhost:9300
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d{yyyy-MM-dd'T'HH:mm:ss'.'SSSZ} %-5level ${spring.application.name} %thread %logger --- %msg%n"
+  level:
+    org.springframework: info
+    org.hibernate: info
+  file: ${spring.application.name}.log2
+  file.max-size: 10MB
+  file.max-history: 10
+
+#debug: true

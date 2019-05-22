@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProfile name="!prod">
+        <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+        <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+        <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+        <appender name="ROLLING-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <encoder>
+                <pattern>${FILE_LOG_PATTERN:-%d{yyyy-MM-dd'T'HH:mm:ss'.'SSSZ} %-5level ${spring.application.name} %thread %logger -- %msg%n}</pattern>
+            </encoder>
+
+            <file>${LOG_FILE:-e-shop.log}</file>
+
+                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                    <fileNamePattern>${LOG_FILE:-e-shop.log}.%i</fileNamePattern>
+                    <minIndex>1</minIndex>
+                    <maxIndex>${LOG_FILE_MAX_HISTORY:-10}</maxIndex>
+                </rollingPolicy>
+
+                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                    <maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
+                </triggeringPolicy>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="ROLLING-FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </root>
+
+    </springProfile>
+
+</configuration>
