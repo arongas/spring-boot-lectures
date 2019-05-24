@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.transaction.Transactional;
 import java.util.stream.Collectors;
 
-@ConditionalOnProperty(prefix = "eshop.security", name = "enabled", matchIfMissing = true)
 @Configuration
 @RequiredArgsConstructor
 public class UserDetailsConfiguration {
