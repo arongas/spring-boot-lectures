@@ -776,6 +776,73 @@ public class ExceptionHandlerImpl  /*extends ResponseEntityExceptionHandler */ {
 
 ---
 
+## Schema initialization
+
+**properties file:**
+
+Enable liquidbase and set base changelog
+
+```yaml
+spring:
+  liquibase:
+    change-log: classpath:migration/master.xml
+```
+**Dependencies: **
+
+Add the dependencies
+
+```groovy
+apply from: 'gradle/liquibase.gradle'
+implementation 'org.liquibase:liquibase-core'
+```
+
+**Liquibase gradle task that can create the schema changelog files:**
+
+`'gradle/liquibase.gradle'` Points to a gradle file that runs the main command of Liquidbase.
+
+*This Points to a gradle task definition that runs liquidbase Main class with specific input that compares database with hibernate entities and produces the next changelog.*
+
+**gradle.properties**
+
+```properties
+liquibase_hibernate5_version=3.6
+```
+
+---
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <include file="changelog/initial_schema_changelog.xml"/>
+    <include file="changelog/<feature>_schema_changelog.xml"/>
+    ...
+
+</databaseChangeLog>
+```
+
+---
+
+
+
+```xml
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="rongasal (generated)" id="1558682095036-1">
+        <createTable tableName="metric">
+            ...
+        </createTable>
+    </changeSet>
+    ...
+    <changeSet author="rongasal (generated)" id="1558682095036-3">
+          ...
+    </changeSet>
+</databaseChangeLog>
+```
+
 ### Exercise
 
 It become quite soon apparent that aggregator stores a significant number of data. Thus it is decided that you should switch aggregator "micro service" to Elastic-search.

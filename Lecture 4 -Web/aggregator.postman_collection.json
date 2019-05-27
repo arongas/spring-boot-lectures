@@ -1,0 +1,432 @@
+{
+	"info": {
+		"_postman_id": "13ffce88-ac2c-4fe3-bd88-63b376534edc",
+		"name": "aggregator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "add sensor  (9089)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"sensorId\": \"9089\",\n     \"name\": \"doorstep\",\n     \"location\":\"http://localhost:9089\",\n     \"description\": \"doorstep sensor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add sensor (9090)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"sensorId\": \"9090\",\n     \"name\": \"garden\",\n     \"location\":\"http://localhost:9090\",\n     \"description\": \"garden sensor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add sensor ( 9091)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"sensorId\": \"9091\",\n     \"name\": \"balcony\",\n     \"location\":\"http://localhost:9091\",\n     \"description\": \"balcony sensor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add sensor  (9092)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"sensorId\": \"9092\",\n     \"name\": \"kitchen\",\n     \"location\":\"http://localhost:9092\",\n     \"description\": \"kitchen sensor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add sensor  (9093)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"sensorId\": \"9093\",\n     \"name\": \"bedroom\",\n     \"location\":\"http://localhost:9093\",\n     \"description\": \"bedroom sensor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add sensor  (9094)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"sensorId\": \"9094\",\n     \"name\": \"livingroom\",\n     \"location\":\"http://localhost:9094\",\n     \"description\": \"livingroom sensor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add sensor  (9095)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"sensorId\": \"9095\",\n     \"name\": \"car\",\n     \"location\":\"http://localhost:9095\",\n     \"description\": \"car sensor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add sensor  (9096)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"sensorId\": \"9096\",\n     \"name\": \"garage\",\n     \"location\":\"http://localhost:9096\",\n     \"description\": \"garage sensor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add sensor  (9097)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"sensorId\": \"9097\",\n     \"name\": \"children beddroom\",\n     \"location\":\"http://localhost:9097\",\n     \"description\": \"children beddroom sensor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add sensor  (9098)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"sensorId\": \"9098\",\n     \"name\": \"office beddroom\",\n     \"location\":\"http://localhost:9098\",\n     \"description\": \"office sensor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add sensor  (9099)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"sensorId\": \"9099\",\n     \"name\": \"children beddroom 2\",\n     \"location\":\"http://localhost:9099\",\n     \"description\": \"children beddroom sensor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list sensors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/sensor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sensor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metrics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/metric",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"metric"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metrics basic",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "a.c@a.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/metric",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"metric"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metrics per sensor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/metric/sensor/9090",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"metric",
+						"sensor",
+						"9090"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

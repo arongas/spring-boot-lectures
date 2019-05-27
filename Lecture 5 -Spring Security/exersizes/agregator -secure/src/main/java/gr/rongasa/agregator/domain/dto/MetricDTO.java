@@ -5,19 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SensorDTO {
-    @NotBlank
+public class MetricDTO {
+    private UUID id;
+    private String value;
+    private Instant time;
     private String sensorId;
-    @NotBlank
-    private String name;
-    @NotBlank
-    private String location;
-    private String description;
 }

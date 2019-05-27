@@ -13,11 +13,14 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SensorDTO {
+    @NotNull
     @NotBlank
-    private String sensorId;
+    String sensorId;
+    @NotNull
     @NotBlank
-    private String name;
+    String name;
+    @NotNull
     @NotBlank
-    private String location;
-    private String description;
+    String location;
+    String description;
 }

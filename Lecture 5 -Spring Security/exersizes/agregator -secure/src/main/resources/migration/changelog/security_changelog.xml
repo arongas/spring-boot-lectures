@@ -1,0 +1,74 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="rongasal (generated)" id="1558631759251-1">
+        <createTable tableName="account">
+            <column name="email" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="accountPK"/>
+            </column>
+            <column name="active" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet author="rongasal (generated)" id="1558632624490-1">
+        <createTable tableName="account_roles">
+            <column name="account_email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="roles" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="rongasal (generated)" id="1558632624490-2">
+        <addForeignKeyConstraint baseColumnNames="account_email" baseTableName="account_roles" constraintName="FK29nd4sbq0as7j2npmac26q371" deferrable="false" initiallyDeferred="false" referencedColumnNames="email" referencedTableName="account" validate="true"/>
+    </changeSet>
+
+    <changeSet author="rongasal" id="insert-users-23052019">
+        <insert tableName="account">
+            <column name="email">a.a@a.com</column>
+            <column name="active">1</column>
+            <column name="last_name">admin</column>
+            <column name="name">admin</column>
+            <column name="password">{noop}admin</column>
+        </insert>
+
+        <insert tableName="account">
+            <column name="email">a.b@a.com</column>
+            <column name="active">1</column>
+            <column name="last_name">admin</column>
+            <column name="name">admin2</column>
+            <column name="password">{noop}admin</column>
+        </insert>
+
+        <insert tableName="account">
+            <column name="email">a.c@a.com</column>
+            <column name="active">1</column>
+            <column name="last_name">admin</column>
+            <column name="name">admin3</column>
+            <column name="password">{noop}admin</column>
+        </insert>
+    </changeSet>
+
+    <changeSet author="rongasal" id="insert-roles-23052019">
+        <insert tableName="account_roles">
+            <column name="account_email">a.a@a.com</column>
+            <column name="roles">ROLE_SENSOR_PROVIDER</column>
+        </insert>
+        <insert tableName="account_roles">
+            <column name="account_email">a.b@a.com</column>
+            <column name="roles">ROLE_SENSOR_READER</column>
+        </insert>
+        <insert tableName="account_roles">
+            <column name="account_email">a.c@a.com</column>
+            <column name="roles">ROLE_METRIC_READER</column>
+        </insert>
+    </changeSet>
+
+
+
+</databaseChangeLog>

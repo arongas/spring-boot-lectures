@@ -1,0 +1,26 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="rongasal (generated)" id="1558620144269-1">
+        <createTable tableName="metric">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" primaryKeyName="metricPK"/>
+            </column>
+            <column name="time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="value" type="VARCHAR(255)"/>
+            <column name="sensor_sensor_id" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rongasal (generated)" id="1558620144269-2">
+        <createTable tableName="sensor">
+            <column name="sensor_id" type="VARCHAR(255)">
+                <constraints primaryKey="true" primaryKeyName="sensorPK"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="location" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="rongasal (generated)" id="1558620144269-3">
+        <addForeignKeyConstraint baseColumnNames="sensor_sensor_id" baseTableName="metric" constraintName="FK4uasvnjlpipinr50betx1dldk" deferrable="false" initiallyDeferred="false" referencedColumnNames="sensor_id" referencedTableName="sensor" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

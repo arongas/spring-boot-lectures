@@ -29,20 +29,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider(authenticationProvider);
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        auth.authenticationProvider(authenticationProvider);
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-               http
-                .csrf().disable().
-                authorizeRequests()
+        http
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/metric/**").hasRole("METRIC_READER")
                 .anyRequest()
-                .authenticated().
-                and().
-                httpBasic()
+                .permitAll()
+                .and().httpBasic()
                 .and()
                 .formLogin()
                 .permitAll()

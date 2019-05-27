@@ -1,0 +1,33 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: aggregator
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:5432/${POSTGRES_DB:aggregator}
+    username: ${POSTGRES_USER:aggregator}
+    password: ${POSTGRES_PASSWORD:aggregator@@@}
+    platform: POSTGRESQL
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults: false
+      hibernate.jdbc.lob.non_contextual_creation: false
+  liquibase:
+    change-log: classpath:migration/master.xml
+
+debug: true

@@ -169,7 +169,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.
-                authorizeRequests()
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/metric/**").hasRole("METRIC_READER")
                 .anyRequest()
                 .authenticated()
@@ -191,12 +192,85 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 }
 ```
 
+---
+
+## Password Encryption
 
 
-<https://www.callicoder.com/spring-boot-spring-security-jwt-mysql-react-app-part-2/>
 
-remebmer to explain liquidbase in web
+Spring Security 5.x changed the way it handled encoded passwords. In previous versions, each application employed one password encoding algorithm only. 
 
-<https://www.baeldung.com/spring-security-5-oauth2-login>
+Switching from one password encoder would be impossible without  affecting the users.
 
-Remmber the encription
+In spring security 5, the concept of password delegation is used. Spring recognizes the algorithm by an identifier prefixing the encoded password. e.g. **{md5}d55b7735123b290ca9f4084b903b8b5f**
+
+If the password hash has no prefix, the delegation process uses a default encoder.
+
+The default behavior is specified in `PasswordEncoderFactories.createDelegatingPasswordEncoder()`.
+
+---
+
+## CORS headers
+
+- Which Requests are Cross-Origin Resource sharing requests
+
+  Frontend script is served from different domain/sub-domain/port/schema from the domain that it tries to access.
+
+- What browsers will do when a CORS is detected and what is the server side's desired behavior.
+
+  Include `ORIGIN` request header which has the domain from which the script has been served and possibly `Access-Control-Request-Method` header indicating (in preflight/OPTIONS) requests the method and A`ccess-Control-Request-Headers`. 
+
+  - At any case, the server needs to respond with whether accepts this CORS request or not by including the header
+
+    **Access-Control-Allow-Origin**
+
+    
+
+---
+
+This bean is the most flexible way of configuring CORS in spring boot:
+
+```java
+@Bean
+public FilterRegistrationBean filterRegistrationBean() {
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowCredentials(true);
+    config.addAllowedOrigin("*");
+    config.addAllowedHeader("*");
+    config.addAllowedMethod("*");
+    source.registerCorsConfiguration("/**", config);
+    FilterRegistrationBean bean = new FilterRegistrationBean<>(new CorsFilter(source));
+    bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    return bean;
+}
+```
+
+---
+
+Another way is by configuring CORS in security level
+
+```java
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    ...
+@Override
+protected void configure(HttpSecurity http) throws Exception {
+    http.
+            cors().configurationSource(corsConfigurationSource())
+```
+
+
+
+Another final way of configuring CORS is by annotation at REST method or controller. Annotation is @CrossOrigin but this is not the proposed way.
+
+---
+
+## Adding Users and Roles
+
+- The best way of adding users and roles is by using Flyway or Liquibase
+- Another approach would be by using CommandLineRunner.
+- Finally one can use SQL scripts (data.sql, schema.sql) which spring boot will run if these are located in /src/main/resources folder.
+
+## Exercise
+
+Modify Sensor service in such a way that it has spring security with username and password set by application.yml. The metrics can only be retrieved from another service only if these are known. Modify aggregator service code so that it can contact the secured sensor service.
