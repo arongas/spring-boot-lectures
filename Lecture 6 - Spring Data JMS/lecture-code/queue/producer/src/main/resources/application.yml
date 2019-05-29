@@ -1,0 +1,10 @@
+spring:
+  jms:
+    template:
+      delivery-mode: persistent
+  activemq:
+    in-memory: false
+  application:
+    name: Consumer
+server:
+  port: 8182

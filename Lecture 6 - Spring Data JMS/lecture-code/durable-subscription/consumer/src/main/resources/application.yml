@@ -1,0 +1,12 @@
+spring:
+  jms:
+    pub-sub-domain: true
+    cache:
+      enabled: false
+  activemq:
+    in-memory: false
+#    broker-url: tcp://localhost:61616
+  application:
+    name: Consumer
+server:
+  port: 8181

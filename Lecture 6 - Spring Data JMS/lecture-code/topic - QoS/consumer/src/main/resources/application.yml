@@ -1,0 +1,14 @@
+spring:
+  activemq:
+    in-memory: false
+  application:
+    name: Consumer
+server:
+  port: 8181
+
+producer:
+  jms:
+    redelivery:
+      backOffMultiplier: 3
+      useExponentialBackOff: false
+      maximumRedeliveries: 2

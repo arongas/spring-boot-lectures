@@ -1,0 +1,14 @@
+spring:
+  jms:
+    template:
+      delivery-mode: persistent
+      qos-enabled: true
+      time-to-live: 100000
+    cache:
+      enabled: false
+  activemq:
+    in-memory: false
+  application:
+    name: Consumer
+server:
+  port: 8182
