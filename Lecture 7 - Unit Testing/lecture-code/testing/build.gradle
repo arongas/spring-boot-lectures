@@ -1,0 +1,44 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.5.RELEASE'
+	id 'java'
+	id "net.ltgt.apt" version "0.21"
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'io.spring.dependency-management'
+
+
+group = 'gr.rongasa'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	runtimeOnly 'org.postgresql:postgresql'
+	/*something new to learn and test*/
+	annotationProcessor("com.querydsl:querydsl-apt:4.2.1")
+	implementation("com.querydsl:querydsl-jpa:4.2.1")
+	implementation("com.querydsl:querydsl-apt:4.2.1:jpa")
+
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.h2database:h2'
+	testImplementation('com.toomuchcoding.jsonassert:jsonassert:0.4.13')
+
+}
+
+idea {
+	module {
+		sourceDirs += file('out/production/classes/generated')
+		generatedSourceDirs += file('out/production/classes/generated')
+	}
+}

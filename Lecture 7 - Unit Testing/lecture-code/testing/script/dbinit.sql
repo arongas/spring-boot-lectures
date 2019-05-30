@@ -1,0 +1,4 @@
+DROP DATABASE IF EXISTS "testing";
+DROP USER IF EXISTS testing;
+CREATE USER testing WITH LOGIN PASSWORD 'testing@@@';
+CREATE DATABASE "testing" WITH OWNER = testing ENCODING = 'UTF8';
