@@ -53,7 +53,7 @@ It makes it easy to use data access technologies, relational and non-relational 
 
 ## Development time
 
-> Start from eshop code of first lecture. Alternatively one may wish to start from spring initilizr as an exercise. In the latter case please add  jpa, postgresql web and lombok   .
+> Start from eshop code of first lecture. Alternatively one may wish to start from spring initilizr as an exercise. In the latter case please add  jpa, postgresql web and lombok.
 
 The build.gradle ends up as follows:
 

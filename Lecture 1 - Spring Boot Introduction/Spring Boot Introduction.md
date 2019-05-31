@@ -25,7 +25,7 @@
 
 * Others like Spring Shell, Spring Session, Spring LDAP, Spring AMQP, Spring Rest Docs, Spring Kafka, etc
 
-* Nothing of the above works alone but everything is connected. 
+* Nothing of the above works alone but everything is/can be connected. 
 
   * Spring Boot uses Spring core.
 
@@ -35,13 +35,11 @@
 
   * Spring cloud data flow uses Spring boot and Spring cloud
 
-    
-
 ---
 
 ## Spring Boot significance
 
-* Auto Configuration 
+* **Auto Configuration** 
 
 * Dependency management using spring boot starters
 
@@ -49,9 +47,9 @@
 
 * Integration with 3rd party libraries
 
-* Community support
+* **Community support**
 
-* Production ready applications
+* **Production ready applications**
 
   * logging
   * actuator
@@ -65,6 +63,7 @@
 
 ## Spring Initializr
 
+- Start from scratch or use a tool to create the project and define the dependencies?
 - Quickly setup a project
 
 ![](assets\initializr.png)
