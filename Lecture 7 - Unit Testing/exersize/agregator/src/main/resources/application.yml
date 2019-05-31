@@ -1,0 +1,12 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: aggregator
+  data:
+    elasticsearch:
+      cluster-nodes: localhost:9300
+  activemq:
+    in-memory: false
+#  jms:
+#    pub-sub-domain: true

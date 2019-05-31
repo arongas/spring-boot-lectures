@@ -50,6 +50,7 @@ public class PersonResourceTest {
     PersonService personService;
     @Autowired
     private MockMvc mockMvc;
+
     private URI baseUri;
 
     @Before
