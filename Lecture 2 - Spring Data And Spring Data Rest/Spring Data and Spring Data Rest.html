@@ -164,7 +164,7 @@ class: center, middle, main-title
 
 ---
 ## Development time
-> Start from eshop code of first lecture. Alternatively one may wish to start from spring initilizr as an exercise. In the latter case please add  jpa, postgresql web and lombok   .
+> Start from eshop code of first lecture. Alternatively one may wish to start from spring initilizr as an exercise. At any case please add  JPA, Postgresql, Web and Lombok.
 
 The build.gradle ends up as follows:
 
@@ -175,23 +175,18 @@ plugins {
     id 'org.springframework.boot' version '2.1.4.RELEASE'
     id 'java'
 }
-
 apply plugin: 'io.spring.dependency-management'
-
 group = 'gr.rongasa'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
 }
-
 repositories {
     mavenCentral()
 }
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -201,11 +196,10 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
-
 ```
 
 ---
-## Configuring Postgresql connection and jpa
+## Application Configuration (Postgresql Connection and JPA)
 ```yaml
 server:
   port: 9090 # Set the server's port
@@ -246,7 +240,7 @@ spring:
 ```
 
 ---
-## Domain object
+## The Domain object
 ```java
 package gr.rongasa.eshop.domain;
 import lombok.*;

@@ -53,7 +53,13 @@ It makes it easy to use data access technologies, relational and non-relational 
 
 ## Development time
 
-> Start from eshop code of first lecture. Alternatively one may wish to start from spring initilizr as an exercise. In the latter case please add  jpa, postgresql web and lombok.
+> Start from eshop code of first lecture. Alternatively one may wish to start from spring initilizr as an exercise. 
+>
+> At any case please add  JPA, Postgresql, Web and Lombok.
+>
+> Next slides focus more at changes compared to the application of the eshop application of the previous lecture.
+
+
 
 The build.gradle ends up as follows:
 
@@ -64,23 +70,18 @@ plugins {
 	id 'org.springframework.boot' version '2.1.4.RELEASE'
 	id 'java'
 }
-
 apply plugin: 'io.spring.dependency-management'
-
 group = 'gr.rongasa'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
-
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
 }
-
 repositories {
 	mavenCentral()
 }
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -90,12 +91,11 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
-
 ```
 
 ---
 
-## Configuring Postgresql connection and jpa
+## Application Configuration (Postgresql Connection and JPA)
 
 ```yaml
 server:
@@ -139,7 +139,7 @@ spring:
 
 ---
 
-## Domain object
+## The Domain object
 
 ```java
 package gr.rongasa.eshop.domain;
@@ -187,7 +187,7 @@ public interface InventoryRepository extends JpaRepository<Inventory,Long> {
 
 ---
 
-## Configuration
+## Database Configuration
 
 ```java
 package gr.rongasa.eshop.configuration;
@@ -213,10 +213,9 @@ public class DatabaseConfiguration {
 ## Result
 
 - The conversion from Spring Data elasticSearch to spring data JPA is done. This is what is meant with familiar and **consistent** model for data layer access.
-
 - We could allow the concurrent existence  of elasticSearch and JPA connection
-
 - We changed domain id from String to Long. Elastic search performs better/easier with String id while 
+- Be careful with the @Id and from which path this is imported from. `javax.persistence.Id;`is for JPA and `org.springframework.data.annotation.Id;` is for non relational databases.
 
 ---
 
@@ -397,7 +396,7 @@ JPA prerequisite information
 
 - @OneToOne: Eager fetch
 - @OneToMany: Lazy fetch
-- Commonly relationships are bidirectional.
+- Commonly relationships are bidirectional (when possibly make them unidirectional).
 
 Attention:
 
@@ -407,7 +406,7 @@ Attention:
   - Danger of stack overflow
   - Danger of performance issues simply when adding just a log line
   
-- private methods annotated with transaction will not cope into opening a transaction
+- private methods annotated with transaction will not cope into opening a transaction.
 
 ---
 
@@ -426,7 +425,7 @@ Attention:
 
 - When using relational database utilize   database versioning and migration tools like Liquidbase or Flyway
 
-  - Don't skip this test as migrating from one version to another will be problematic without these tools and also it is harder to introduce these tools at next stage.
+  - Don't skip this step as migrating from one version to another will be problematic without these tools and also it is harder to introduce these tools at a latter stage.
 
 ---
 
@@ -435,7 +434,7 @@ Attention:
 Spring Data Rest is an extension of Spring Data that exposes over REST the spring data methods that exist in spring data repositories.
 
 > - Impressive at first look and usefullt for rapid programming
-> - Use it only for testing, development, prototype or only when product is really simple
+> - Use it only for testing, development prototype or only when product is really simple
 >   - If used in bigger products you bind domain model with rest consumer. Architecturally wise this is huge mistake that sooner or latter will add bigger complexity.
 >   - Spring data rest is the best demonstration of HATEOAS
 >
@@ -634,9 +633,9 @@ curl -X PUT \
 
 ---
 
-## Search hypermedia link
+## Search Hypermedia Link
 
-- Ensure you have added in spring data custom repository method @Param@Paramannotation at method parameters
+- Ensure you have added in spring data custom repository method `@Param` annotation at method parameters
 
 - After creating an Inventory object locate hypermedia link named search and make a GET request.
 
@@ -675,7 +674,7 @@ curl -X PUT \
 
 ## Spring Data REST Tips And Tricks
 
-- You can annotate as @RestResource(exported = false) a Repository (method) to define it as not exposed over web
+- You can annotate as `@RestResource(exported = false)` a Repository (method or class) to define it as not exposed over web
 - You can configure Repositoriies (i.e. expose id) by using RepositoryRestConfigurer
 
 ```java
@@ -702,9 +701,11 @@ public class RestConfiguration {
 implementation 'org.springframework.data:spring-data-rest-hal-browser'
 ```
 
-Now open the Spring Data Rest base url via browser and check the result.
+> Now open the Spring Data Rest base url via browser and check the result.
+>
+> A UI regarding exposed rest methods is provided.
 
-## Spring Data tips and tricks
+## Spring Data Tips And Tricks
 
 You can load initial data via CommandLineRunner
 
@@ -727,8 +728,7 @@ public class DatabaseDataInitialization implements CommandLineRunner {
 ## Spring Data MongoDB
 
 - Lets switch this project now to NoSQL/MongoDB.
-
-- This way we have seen the same project in ElasticSearch, in JPA(Postgresql) and MongoDB
+- Then way we have seen the same project in ElasticSearch, in JPA (Postgresql) and MongoDB. 
 
 ---
 
@@ -766,3 +766,18 @@ public class DatabaseDataInitialization implements CommandLineRunner {
 
   
 
+# Exercise 1
+
+Purpose: Gain experience with Spring Data and Spring Data Rest. 
+
+
+
+## Description
+
+You need to extend the simple Library Management System and add the same information added into elasticsearch into postgresql database.  This means that it has been decided to support two databases in parallel. 
+
+- Postgresql will not be exposed over web using Spring Data Rest. 
+- Elasticsearch database will be exposed over REST.
+- One extra method supported over web will be the post method ''/synch' which will synchronize all data from Postgresql to elastic search.
+- From elasticSearch repositories it has been decided to expose over rest all the get methods but hide/disable the database modifying methods and allow modification only via the existing controller.
+- It is decided to use flyway as a migration tool for JPA database.
