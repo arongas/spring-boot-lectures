@@ -87,12 +87,15 @@
 ### Common Spring Boot Starters 
 
 - Spring starter Web
-- Spring Starter Rest
 - Spring Starter Security
 - Spring Starter Data JPA
 - Spring Starter Data Rest
 - Spring Starter Actuator
 - Spring Starter Logging
+
+
+
+> A good example of what Spring boot team means with the term 'opinionated' for libraries is logging which by default uses Logback or spring data which by default uses Hibernate.
 
 ## Spring Boot Auto Configuration
 
@@ -100,6 +103,8 @@
 - Auto-configuration is non-invasive. At any point, you can start to define your own configuration to replace specific parts of the auto-configuration.
 - Auto Configuration uses sensible defaults 
 - Auto Configuration uses user configuration to override defaults
+
+> Don't feel like something got control of your application development. It merely provides aid for rapid development. There are plenty of ways to override the default configurations.
 
 ---
 
@@ -112,7 +117,7 @@
   - ssl and cypher configuration
   - Multiple connectors
 
-- For servlet stack applications, spring-boot-starter-web includes Tomcat by default, but you can use jetty or undertow instead.
+- For servlet stack applications, spring-boot-starter-web includes `Tomcat` by default, but you can use `Jetty` or `Undertow` instead.
 - For reactive stack applications, the spring-boot-starter-webflux includes Reactor Netty by default but you can use tomcat, jetty, or undertow instead.
 - You can finally create a war and run a spring boot application inside another application server.
 
@@ -123,7 +128,7 @@
 | Annotation               | Description                                                  |
 | ------------------------ | ------------------------------------------------------------ |
 | @SpringBootApplication   | Marks the main class of the application. Encapsulates the following annotations.<br />@EnableAutoConfiguration, @Configuration and @ComponentScan<br /> |
-| @EnableAutoConfiguration | Enables that spring boot will look for auto configuration beans on its classpath<br /> |
+| @EnableAutoConfiguration | Enables that spring boot will look for auto configuration beans on its classpath.<br />Most commonly used with the exclude attribute that this annotation has. |
 | @Configuration           | Spring Configuration annotation indicates that the class has @Bean definition methods. Spring will instantiate these beans  and use them in dependency injection.<br /> |
 | @ComponentScan           | Enables component scan. Spring will scan for annotated classes<br /> |
 
@@ -190,22 +195,24 @@ dependencies {
 * Spring boot plugin is:
   * Package executable jar or war archives
   * Run Spring Boot applications
-  * Use the dependency management provided by `spring-boot-dependencies`
+  * Use the dependency management provided by `spring-boot-dependencies` [here](https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/pom.xml)
 * Since we added Web, all required libraries for a simple web application are added.
 
 
-- With web mvc jars inside the application context, auto configuration configures the application as a web mvc application
-  No need for web.xml or servlet.xml 
-
-  Key behaviors such as setting up a DispatcherServlet are automatically activated.
-
+- With web MVC jars inside the application context, auto configuration configures the application as a web MVC application. So there is not need for web.xml or servlet.xml 
   
 
-  > This magic happens inside WebMvcAutoConfiguration class
+Key behaviors such as setting up a DispatcherServlet are automatically activated.
+
+
+
+> This magic happens inside WebMvcAutoConfiguration class
 
 ---
 
 ## Rest Controller
+
+> Lets create a rest controller
 
 ```java
 package gr.rongasa.inventory.web.rest;
@@ -228,7 +235,7 @@ public class GreetingsController {
 
 ---
 
-| Controller Annotation |                   Description                                           |
+| Controller Annotation | Description                                                  |
 | --------------------- | ------------------------------------------------------------ |
 | @Controller           | Spring annotation denoting that this class serves web interface |
 | @RestController       | Introduced in Spring 4.0 to simplify the creation of RESTful web services. It’s a convenience annotation that combines @Controller and @ResponseBody |
@@ -236,23 +243,37 @@ public class GreetingsController {
 | @ResponseBody         | Automatic serialization of the return object into the HttpResponse |
 | @GetMapping           | Convenient annotation for RequestMapping with method GET.    |
 | @PostMapping          | Convenient annotation for RequestMapping with method POST.   |
-| @PutMapping           | Convenient annotation for RequestMapping with method GET.    |
-| @PathVariable         | Denotes a java method property as http path parameter        |
-| @RequestParam         | Denotes a java method property as query parameter            |
-| @RequestBody          | Denotes a java method property as request body               |
+
+---
+
+| Controller Annotation | Description                                               |
+| --------------------- | --------------------------------------------------------- |
+| @PutMapping           | Convenient annotation for RequestMapping with method GET. |
+| @PathVariable         | Denotes a java method property as http path parameter     |
+| @RequestParam         | Denotes a java method property as query parameter         |
+| @RequestBody          | Denotes a java method property as request body            |
 
 ---
 
 ## Build and Run
 
-- gradlew clean build
-- java –jar build/libs/inventory-0.0.1-SNAPSHOT.jar
+**Build:**
+
+> gradlew clean build
+
+**Run:**
+
+> java –jar build/libs/inventory-0.0.1-SNAPSHOT.jar
 
 ----
 
-## Connection with Elastic Search and expose domain object via Rest Interface
+## Connection with ElasticSearch and Expose Domain Object via Rest Interface
 
+> An example of how quickly a meaningful application can be created with with Spring boot. 
+>
+> Below Spring initializer will be used and a few lines of code will be written to create a small CRUD web/rest application
 
+---
 
 ### Gradle
 
@@ -285,7 +306,7 @@ dependencies {
 
 - ​	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
-This adds everything needed for elastic search
+This adds everything needed for working with elasticsearch
 
 - ​	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
@@ -293,15 +314,18 @@ This adds everything needed for web application monitoring
 
 - Lombok
 
-	configurations {
-		compileOnly {
-			extendsFrom annotationProcessor
-		}
-	}
-	...
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-This adds everything needed for lombok to run
+  ```groovy
+  	configurations {
+  	compileOnly {
+  		extendsFrom annotationProcessor
+  	}
+  }
+  ...
+  compileOnly 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok'
+  ```
+
+  This adds everything needed for Lombok to be used
 
 ---
 
@@ -312,28 +336,29 @@ This adds everything needed for lombok to run
 
 ---
 
-### Project Structure
+### Spring Boot Project Structure
 
-Spring does not have any special requirements for the structure of the project. You do!
+Spring does not have any special requirements for the structure of the project. **But You do**!
 
 Not keeping a clean structure will make code not easily maintainable since you will need to check in every class for it annotation to identify the class purpose. Propose to keep the following rules:
 
 - Create a root package (i.e. gr.rongasa.eshop)
-- Create a package where you keep all your auto configuration classes i.e. gr.rongasa.eshop.configuration
+- Create a package where you keep all your configuration classes i.e. gr.rongasa.eshop.configuration
 - Create a package where you keep all your domain model classes i.e. gr.rongasa.eshop.domain
 - Create a package where you keep all your repository classes i.e. gr.rongasa.eshop.repository
-  - Ensure your repository classes end with the word Repository
+  - Ensure your repository classes end with the word `Repository`
 
 ---
+
+### Spring Boot Project Structure
 
 - Create a package where you keep all your service/business logic classes i.e. gr.rongasa.eshop.service
   - Ensure that for every service class you have also an interface 
 - Create a package where you keep all your web classes i.e. gr.rongasa.eshop.web
 - Create a package where you keep all your web rest interface i.e. gr.rongasa.eshop.web.rest
-- Ensure that rest interface uses only services and services use only repository
+- **Ensure that rest interface uses only services and services use only repository classes**
 - It is a good practice that domain objects are transformed to DTO objects inside the services
-  - I tend to add these DTO classes either in gr.rongasa.eshop.web.model or in gr.rongasa.eshop.model
-  - Propose the use of frameworks like mapstruct or Dozer for the conversion.
+  - Propose the use of frameworks like mapstruct or Dozer for the conversion. 
 
 ---
 
@@ -386,6 +411,8 @@ public class Inventory {
 ```
 
 ---
+
+## Domain object
 
 - Every domain object represents what will be written into the database
 - Lombok is not needed, simply used to reduce written code
@@ -537,3 +564,34 @@ public class InventoryResource {
     }
 }
 ```
+
+# Exercise 1
+
+Purpose: Understand how to setup a spring boot project and how this can be executed. Also understand the power of spring boot starter auto-configuration  and "executable jar" features.
+
+
+
+## Description
+
+You wish to create a simple Library Management System where users can add or find details about resources.  A resource can be of media type: book, magazine or DVD. The data that can be saved into the system are the following:
+
+```json
+{
+   "tracking_id": "tracking id added as a sticker on the media resource",
+   "type": "media type (book or magazine or dvd)",
+   "name": "media name, i.e. title of book",
+   "author": "author of book",
+   "abstract": "abstract of media/description",
+   "url": "download url"
+}
+```
+
+You should create a java web application that allows adding into elasticsearch such information and allowing this information to be accessed using the tracking id or the type of the book or the name of the book.
+
+## Requirements 
+
+You are requested to use Lombok during development as part of the exercise.
+
+> Note: You are not requested to implement any free text functionality or implement the rest methods to actually download the resource.
+
+> Note: The proposed solution uses also Mapstruct to decouple view from domain object. You are advised to also try to use this methodology, but as a second step 
