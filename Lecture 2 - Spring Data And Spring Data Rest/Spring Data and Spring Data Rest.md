@@ -774,7 +774,7 @@ Purpose: Gain experience with Spring Data and Spring Data Rest.
 
 ## Description
 
-You need to extend the simple Library Management System and add the same information added into elasticsearch into postgresql database.  This means that it has been decided to support two databases in parallel. 
+You need to extend the simple Library Management System (exercise of first lecture) and add the same information added into elasticsearch into postgresql database.  This means that it has been decided to support two databases in parallel. 
 
 - Postgresql will not be exposed over web using Spring Data Rest. 
 - Elasticsearch database will be exposed over REST.
