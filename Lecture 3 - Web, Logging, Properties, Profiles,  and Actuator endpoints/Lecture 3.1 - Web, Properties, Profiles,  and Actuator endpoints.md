@@ -4,7 +4,10 @@
 
 ## Focus
 
-- Old fashioned Spring MVC applications using JSP, thymeleaf, or other templating view resolution technologies had the concept of view resolver and the concept of internationalization. This is still possible though not so much extensively used due to the appearance of modern View frameworks like Angular.
+- Old fashioned Spring MVC applications using JSP, thymeleaf, or other templating view resolution technologies had the concept of view resolver and the concept of internationalization. 
+
+  - This is still possible though not so much extensively used due to the appearance of modern View frameworks like Angular.
+  - The creation and configuration of view resolver and internationalization is practically done automatically
 
 - In modern applications, server focus on business logic and RESTfull API rather than view configuration and internationalization.
   - View/Frontend is served from the same or different servers (apache2, nginx) as pure html, script,... files. No view interceptor is involved.
@@ -49,13 +52,13 @@ dependencies {
 
 Default paths:
 
-| Path                                            | Resource type                                                |
-| ----------------------------------------------- | ------------------------------------------------------------ |
-| src\main\resources\templates                    | templates that view resolver should process                  |
-| src\main\resources\static\{css\image\js\...} | static files like css, images, etc<br />Tese are accessible via http://<address:port>/{css\image\js}/{filename} |
-|                                                 |                                                              |
+| Path                                         | Resource type                                                |
+| -------------------------------------------- | ------------------------------------------------------------ |
+| src\main\resources\templates                 | Templates that view resolver should process                  |
+| src\main\resources\static\{css\image\js\...} | Static files like css, images, etc<br />These are accessible via http://<address:port>/{css\image\js}/{filename} |
+|                                              |                                                              |
 
-These are the default paths specified from auto-configuration. If one wishes different paths could modify
+These are the default paths specified from auto-configuration. If one wishes different paths could modify `application.properties` file
 
 ```properties
 spring.thymeleaf.prefix=classpath:/templates/
@@ -65,6 +68,8 @@ spring.thymeleaf.suffix=.html
 ---
 
 ## index.html Template
+
+**Create a first template:**
 
 ```html
 <!DOCTYPE HTML>
@@ -93,6 +98,8 @@ spring.thymeleaf.suffix=.html
 ---
 ## Controller
 
+**Create the controller providing the view name and the dynamic attributes:**
+
 ```java
 package gr.rongasa.helllo.web.controller;
 import org.springframework.stereotype.Controller;
@@ -119,6 +126,8 @@ public class HelloController {
 ---
 
 ## css file
+
+**Create the static files:**
 
 ```css
 body {
@@ -147,12 +156,14 @@ h2{
 ## Notes
 
 - css file is accessible from http://localhost:8080/css/style.css
-- Thymeleaf view resolver is handled properly within the spring boot fat jar files. Contrary jsp view resolver is hard to accomplish and propose to avoid.
+- Thymeleaf view resolver is handled properly within the spring boot fat jar files. **Contrary** jsp view resolver is hard to accomplish and propose to avoid usage with fat jar of spring boot.
 - Controller has a Model class. You may meet examples with ModelAndView class. This is the same functionality with only difference that inside this object the view name is also specified.
 
 ---
 
 ## Error page
+
+**Create the default error page (error.html):**
 
 ```java
 <!DOCTYPE HTML>
@@ -162,10 +173,8 @@ h2{
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Something went wrong</title>
-
     <link rel="stylesheet" th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
-
     <script type="text/javascript" th:src="@{webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 </head>
 <body>
@@ -177,6 +186,7 @@ h2{
 </body>
 </html>
 ```
+Alternatevely create a controller that implements `ErrorController` with RequestMapping of `/error` 
 
 ---
 
@@ -220,9 +230,7 @@ public LocaleChangeInterceptor localeChangeInterceptor() {
 }
 ```
 
----
-
-- Add Locale interceptor into the applications interceptor registry
+- Finally add Locale interceptor into the applications interceptor registry
 
   ```java
   @Configuration
@@ -234,6 +242,7 @@ public LocaleChangeInterceptor localeChangeInterceptor() {
           }
   }
   ```
+---
 
   - Add messages_xx.properties files in i18n folder (as configured in the message source bean)
 
@@ -243,13 +252,11 @@ public LocaleChangeInterceptor localeChangeInterceptor() {
     <span th:text="#{header_label}">
     ```
 
-    
-
 ---
 
 ## Actuator Endpoints
 
-- Spring Boot micro services, need to allow other systems to monitor and interact with the application.  
+- Spring Boot microservices, need to allow other systems to monitor and interact with the application.  
 
 - Details of the endpoints can be found in Spring boot documentation:
 
@@ -303,10 +310,10 @@ public LocaleChangeInterceptor localeChangeInterceptor() {
 
 - All application properties can also be set from the command starting the application i.e. `-Dserver.port=8026`
 
-  ```yaml
-  server:
-    port: 8026
-  ```
+```yaml
+server:
+  port: 8026
+```
 
   
 
@@ -314,13 +321,14 @@ public LocaleChangeInterceptor localeChangeInterceptor() {
 
 ## Profile based settings
 
-Set active profile (application.yml)
+**Set active profile (application.yml):**
+
 ```yaml
 spring:
   profiles:
     active: prod
 ```
-Specific properties for dev profile (application-dev.yml)
+**Specific properties for dev profile (application-dev.yml):**
 
 ```yaml
 management:
@@ -329,7 +337,7 @@ management:
       exposure:
         include: '*'
 ```
-Specific properties for prod profile (application-prod.yml)
+**Specific properties for prod profile (application-prod.yml):**
 
 ```yaml
 management:
@@ -423,17 +431,15 @@ hello:
 
 ## Type-safe Configuration Properties
 
-Add: `@EnableConfigurationProperties({HelloConfig.class})`
+**Add in a configuration class:** `@EnableConfigurationProperties({HelloConfig.class})`
 
-
+**Create a properties bean that can latter be autowired anywhere in code:**
 
 ```java
 package gr.rongasa.helllo.config;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 @ConfigurationProperties(prefix = "hello")
 @Data
 @NoArgsConstructor
@@ -461,7 +467,7 @@ public class HelloConfig {
 
 4. `@PropertySource` annotations on your `@Configuration` classes.
 
-   Using PropertySource` one may configure any (.property) file to act as a property source for spring boot application. **Not recomended**
+   Using PropertySource` one may configure any (.property) file to act as a property source for spring boot application. **Not recommended and not described above** 
 
 5. Application properties outside of your packaged jar
 

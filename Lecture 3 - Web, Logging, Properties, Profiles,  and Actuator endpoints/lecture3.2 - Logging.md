@@ -1,11 +1,19 @@
 ## Logging
 
-- Enabling debug mode
+- Things always go bad and automation of Spring boot does make things sometimes harder to troubleshoot.
+
+  - Debugging with the ide is a first thing to use
+  - Logging is the second
+
+- Spring boot has chosen Logback for logging
+
+  
+---
+- Enabling debug mode via application.yaml
 
 ```yaml
 debug: true
 ```
----
 
 - Configuring logging via YAML
 

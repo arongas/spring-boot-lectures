@@ -1,151 +1,40 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<title>RESTfull web services</title>
-		<style>
-			body {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-h1, h2, h3 {
-	font-weight: 400;
-	margin-bottom: 0;
-}
-.remark-slide-content h1 { font-size: 3em; }
-.remark-slide-content h2 { font-size: 2em; }
-.remark-slide-content h3 { font-size: 1.6em; }
-.footnote {
-	position: absolute;
-	bottom: 3em;
-}
-li p { line-height: 1.25em; }
-.red { color: #fa0000; }
-.large { font-size: 2em; }
-a, a > code {
-	color: rgb(249, 38, 114);
-	text-decoration: none;
-}
-code {
-	background: none repeat scroll 0 0 #F8F8FF;
-  border: 1px solid #DEDEDE;
-  border-radius: 3px 	;
-  padding: 0 0.2em;
-}
-.remark-code, .remark-inline-code { font-family: "Bitstream Vera Sans Mono", "Courier", monospace; }
-.remark-code-line-highlighted     { background-color: #373832; }
-.pull-left {
-	float: left;
-	width: 47%;
-}
-.pull-right {
-	float: right;
-	width: 47%;
-}
-.pull-right ~ p {
-	clear: both;
-}
-#slideshow .slide .content code {
-	font-size: 0.8em;
-}
-#slideshow .slide .content pre code {
-	font-size: 0.9em;
-	padding: 15px;
-}
-.main-title, .title {
-	background: #272822;
-	color: #777872;
-	text-shadow: 0 0 20px #333;
-}
-.title h1, .title h2, .main-title h1, .main-title h2 {
-	color: #f3f3f3;
-	line-height: 0.8em;
-}
-/* Custom */
-remark-slide{
-	background-color: #9bbcf2;
-}
-
-blockquote {
-  position: relative;
-  padding-left: 1em;
-  border-left: 0.2em solid #4d91b3;
-  margin-bottom: 3em;
-}
-blockquote:before, blockquote:after {
-  content: '\201C';
-  color: #4d91b3;
-}
-blockquote:after {
-  content: '\201D';
-}
-
-.remark-slide-content {
-    background-color: #fff;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: table-cell;
-    font-size: 22px;
-    padding: 1em 4em 1em 4em;
-}
-
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td,  th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-tr:nth-child(even){background-color: #f2f2f2;}
-
-tr:hover {background-color: #ddd;}
-
-th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #4CAF50;
-  color: white;
-}
-		</style>
-	</head>
-	<body>
-		<textarea id="source">
-class: center, middle, main-title
-
 # RESTfull web services
 
----
-## Lecture description
+
+
+## Lecture Description
 
 - Rest fits better with modern frontend technologies like Angular.
 - Server side has no concerns on the view part of the application.
-- Internationalization is mostly limited to error handling
+- Internationalization is mostly (and actually not even there) limited to error handling
+
+
 
 > This lecture will include and utilize a lot of things we have learned already. It is based actually on two projects and multiple instances starting (very slowly) to mimic cloud development.
-> 
-> A friend bought a set of smart sensors and installed these around the house. We wish to grab the sensor readings from time to time and collect/aggregate these into an aggregation database. In future these readings will be processed. For the time being we need to create the sensor&#39;s data reading application and the aggregation application which will collect and store metrics from the sensors.
-
+>
+> A friend bought a set of smart sensors and installed these around the house. We wish to grab the sensor readings from time to time and collect/aggregate these into an aggregation database. 
+>
+> In future these readings will be processed. For the time being we need to create the sensor's data reading application and the aggregation application which will collect and store metrics from the sensors.
 
 ---
-## Sensor Reading application (akka sensors)
-A Spring boot application with simply a web interface
 
-**Dependencies:**
+## Sensor Reading Application (akka sensors)
+
+A Spring boot application with simply a web interface will be created using spring initializer.
+
+**Use the following dependencies :**
 
 ```yaml
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 ```
-**Properties:**
+
+**Set Properties:**
 
 ```properties
 spring.application.name=Sensor
@@ -153,7 +42,8 @@ server.port=9090
 ```
 
 ---
-**Metric Domain Object:**
+
+**Create Metric Domain Object:**
 
 ```java
 package gr.rongasa.sensor.domain;
@@ -183,7 +73,8 @@ public class MetricDTO {
 ```
 
 ---
-**Rest Interface:**
+
+**Create the Rest Interface:**
 
 ```java
 package gr.rongasa.sensor.web.rest;
@@ -215,40 +106,45 @@ public class MeasurementResource {
 ```
 
 ---
-**Start 5 sensors at ports 9090-9095:**
 
+**Start 5 sensors at ports 9090-9095:**
 
 - java -Dserver.port=9090 -jar sensor.jar
 - java -Dserver.port=9091 -jar sensor.jar
 - ...
 - java -Dserver.port=9095 -jar sensor.jar
 
-
 ---
-**Aggregator:**
 
+**Aggregator Service:**
 
-- Aggregator will store data into a relational database
-- Aggregator will have a list of monitored sensors and the rest interface to CRUD these sensors
-- Aggregator will retrieve and store over rest interface for every sensor every x seconds a list of metrics. 
-- Aggregator will have a rest interface to expose these metrics over REST.
+- The Aggregator will store data into a relational database
+- The Aggregator will have a list of monitored sensors and the rest interface to CRUD these sensors
+- The Aggregator will retrieve and store over rest interface for every sensor every x seconds a list of metrics. 
+- The Aggregator will have a rest interface to expose these metrics over REST.
 
+----
 
----
 **Domain Model:**
 
-
 - DTO and JPA entities are defined.
-- Unidirectional relationship between metric and sensor is defined.
-- Validation and JSON decisions are made in the DTO
-- Database decisions are made in the entity object level
-- DTO in this &#39;microservice&#39; is not exchanged as code BUT as rest interface.
 
-> Exchanging java code in microservices is relatively bad idea but even worse idea is to create common libraries.
+- Unidirectional relationship between metric and sensor is defined.
+
+- Validation and JSON decisions are made in the DTO
+
+- Database decisions are made in the entity object level
+
+- DTO in this 'microservice' is not exchanged as code BUT as rest interface.
+
+  
+
+> Exchanging java code in micro-services is relatively bad idea but even worse idea is to create common libraries.
+
 
 
 ---
-**Domain Model (DTO):**
+**Create the Domain Model (DTO) -Sensor-:**
 
 ```java
 package gr.rongasa.agregator.domain.dto;
@@ -276,7 +172,7 @@ public class SensorDTO {
 ```
 
 ---
-**Domain Model (DTO):**
+**Create the Domain Model (DTO) -Metric-:**
 
 ```java
 package gr.rongasa.agregator.domain.dto;
@@ -302,7 +198,7 @@ public class MetricDTO {
 ```
 
 ---
-**Domain Model (Entity):**
+**Create the Domain Model (Entity-Metric):**
 
 ```java
 package gr.rongasa.agregator.domain.jpa;
@@ -336,7 +232,7 @@ public class Metric {
 ```
 
 ---
-**Domain Model (Entity):**
+**Create the Domain Model (Entity/Sensor):**
 
 ```java
 package gr.rongasa.agregator.domain.jpa;
@@ -364,7 +260,7 @@ public class Sensor {
 ```
 
 ---
-**Spring Data Repositories**
+**Create the Spring Data Repositories**
 
 ```java
 package gr.rongasa.agregator.repository;
@@ -393,8 +289,8 @@ public interface SensorRepository extends JpaRepository<Sensor, String> {
 ```
 
 ---
-**Map Entity to DTO and vise versa**:
 
+**Map Entity to DTO and vise versa**:
 
 - Mapstruct mapper can commonly be interface or abstract classes. Interface in simply classes abstract when after-mapping actions are needed.
 - Hard to configure originally but it pays off in clean code, agility and ease of adaptation
@@ -403,22 +299,26 @@ public interface SensorRepository extends JpaRepository<Sensor, String> {
 ```java
   @Mapper(componentModel = "spring", uses = {SensorRepository.class})
 ```
-
-- componentModel Should be spring to be able to autowire 
-- `uses` enables the opposite,  specify other mappers (or spring beans) the given mapper needs 
-- Methods:
+  - `componentModel` Should be `spring` to be able to autowire.
+  - `uses` enables the opposite,  specify other mappers (or spring beans) the given mapper needs 
+  - Methods:
 
 ```java
   Sensor sensorDTOToSensor(SensorDTO sensorDTO);
   SensorDTO sensorToSensorDTO(Sensor sensor);
 ```
 
+*Don't forget to add the mapstruct plugin*
+
 ---
+
 **Map Entity to DTO and vise versa**:
 
 
-- Simply defining the methods is as if creating the methods. Only mapping exceptions need to be defined
-- Define what will be ignored and how to map things together
+- Simply defining the methods is as if creating the methods is enough. 
+  Only mapping exceptions need to be defined
+
+-   Define what will be ignored and how to map things together
 
 ```java
   @Mapping(target = "sensor", ignore = true)
@@ -427,14 +327,15 @@ public interface SensorRepository extends JpaRepository<Sensor, String> {
 
 - Connect hibernate relationships together or any other special logic needed. 
 ```java
-@AfterMapping
-void addBackReference(@MappingTarget Metric metric, MetricDTO metricDTO) {...}
+  @AfterMapping
+  void addBackReference(@MappingTarget Metric metric, MetricDTO metricDTO) {...}
 ```
+
 - Examples and documentation are needed. Using mapstruct is not trivial exercise but over time pays off.
-https://github.com/mapstruct/mapstruct-examples
-
-
+  
+  https://github.com/mapstruct/mapstruct-examples
 ---
+
 **Map Entity to DTO and vise versa:**
 
 ```java
@@ -456,6 +357,7 @@ public interface SensorMapper {
 ```
 
 ---
+
 **Map Entity to DTO and vise versa:**
 
 ```java
@@ -490,18 +392,21 @@ public abstract class MetricMapper {
 ```
 
 ---
-**Property configuration:**
-
+**Specify Property configuration:**
 
 - Dynamic Environment values and OS or Docker
+
 - Dynamic values from command line
+
 - Profiles
+
+  
 
 > In future in the picture cloud configuration server will also appear. For the time being avoid thinking about cloud/microservices
 
-
 ---
-**Property configuration:**
+
+**Specify Property configuration (cont.):**
 
 ```yaml
 server:
@@ -524,7 +429,8 @@ spring:
 ```
 
 ---
-**Property configuration:**
+
+**Specify Property configuration (cont.):**
 
 ```yaml
 spring:
@@ -547,17 +453,17 @@ spring:
 ```
 
 ---
-**Service layer:**
 
+**Specify Service layer:**
 
 - What is the need of Service layer
 - Interfaces, Dependency injection
 - Mapstruct Repositories and Services: How these bind together
 - Where transactional can be applied
 
-
 ---
-**Service layer:**
+
+**Specify Service layer (cont.):**
 
 ```java
 ....
@@ -588,6 +494,7 @@ public class MetricServiceImpl implements MetricService {
 ```
 
 ---
+
 ```java
 @Service
 @RequiredArgsConstructor
@@ -620,19 +527,30 @@ public class SensorServiceImpl implements SensorService {
 ```
 
 ---
-**Web Interface:**
 
+**Specify Web Interface:**
 
 - Separate controller per functionality
-- Controllers should not have business logic and should be connected with service layer
-- Use properly Rest methods and status code
-- Use Validation 
-- Use proper error handling
-- Don&#39;t use HATEOAS (compile group: &#39;org.springframework.boot&#39;, name: &#39;spring-boot-starter-hateoas&#39;) but consider the front end user.
 
+- Controllers should not have business logic and should be connected with service layer
+
+- Use properly Rest methods and status code
+
+- Use Validation 
+
+- Use proper error handling
+
+- Don't necessary use HATEOAS (compile group: 'org.springframework.boot', name: 'spring-boot-starter-hateoas') but consider the front end user.
+
+  Use clean Rest Interface
+
+> HATEOAS and Rest Docs cost in effort (like any other functionality). Use these when/if the rest interface developed is public or if there is enough capacity.
+>
+> This of course does not mean that proper Rest method usage and proper Rest interface design is not needed.
 
 ---
-**Web Interface:**
+
+**Specify Web Interface (cont.):**
 
 ```java
 package gr.rongasa.agregator.web.rest;
@@ -662,7 +580,8 @@ public class MetricServiceResource {
 ```
 
 ---
-**Web Interface:**
+
+**Specify Web Interface (cont.):**
 
 ```java
 package gr.rongasa.agregator.web.rest;
@@ -694,15 +613,18 @@ public class SensorServiceResource {
 ```
 
 ---
+
 **Rest Template:**
 
-
 - Application needs to communicate over rest with Sensor application. 
+
 - Create a Rest Template bean
+
 - RestTemplateBuilder is autowired and can be used to configure rest template. i.e.
- `builder
-.setConnectTimeout(Duration.ofMillis(30))
-.setReadTimeout(Duration.ofMinutes(2));`
+
+   `builder.basicAuthorization("username", "password").setConnectTimeout(Duration.ofMillis(30));`
+
+  
 
 ```java
 package gr.rongasa.agregator.config;
@@ -722,11 +644,11 @@ public class RestClient {
 ```
 
 ---
+
 **Enable Scheduling:**
 
-
 - Create a Executor of a 10 threads
- -  10 can/should be configurable of application.yml
+  - 10 can/should be configurable of application.yml
 - Enable scheduling (`@EnableScheduling`)
 
 ```java
@@ -751,24 +673,34 @@ public class SensorTasksConfig {
 ```
 
 ---
+
 **Communication with Sensors**:
 
-
-- Annotation of  @Scheduled(fixedRate = 3600) makes service run every 3600 ms. 
+- Annotation of  `@Scheduled(fixedRate = 3600)` makes service run every 3600 ms. 
+  
 - Scheduling can work with crone jobs or can be dynamic. Usage of scheduling is easy. Good bye Quartz! 
+  
+- To use property file based fixedRate, etc use the string alternative of fixedRate and "${my.property}"
+  
 - Rest template is easy to use as well. 
- - exchange method used below is made because the rest interface used here returns list of objects
- - Commonly getForntity, postForEntity and put methods are used.
- - Uri variables feature is important to know
-```java
-Map<String, Object> params = new HashMap<>();
-params.put("sensorId", <dynamic value>);
-return restTemplate.getForObject("/metric/sensor/{sensorId}", String.class, params);
-```
 
+  - Exchange method used below is made because the rest interface used here returns list of objects
+
+  - Commonly getForEntity, postForEntity and put methods are used.
+
+  - Uri variables feature is also important to know
+
+    ```java
+    Map<String, Object> params = new HashMap<>();
+    params.put("sensorId", <dynamic value>);
+    return restTemplate.getForObject("/metric/sensor/{sensorId}", String.class, params);
+    ```
+
+    
 
 ---
-**Communication with Sensors**:
+
+**Communication with Sensors (code):**
 
 ```java
 package gr.rongasa.agregator.service;
@@ -800,6 +732,8 @@ public class ScheduledTasks {
 ```
 
 ---
+**Communication with Sensors (code):**
+
 ```java
 private void collectMetricsForSensor(SensorDTO sensor) {
     //todo add pagination
@@ -814,26 +748,27 @@ private void collectMetricsForSensor(SensorDTO sensor) {
     }
 }
 ```
-
 ---
+
 **Exception handling in spring boot:**
 
 <u>Entity Validation:</u>
 
-
 - Add `javax.validation.constraints` wherever needed in the DTO objects, i.e. `@Min, @Max, @NotNull`.
+
 - Add `@Valid` in rest interface
+
 - Frontend now gets the validation errors in the best possible way.
 
 <u>Exception handling:</u>
-
 
 - Centrally handle Exceptions using `@ControllerAdvice/@ExceptionHandler`
 - Prefer Custom Runtime exceptions
 - Avoid overriding ResponseEntityExceptionHandler unless very custom logic is required. 
 
-
 ---
+**Exception handling in spring boot (code):**
+
 ```java
 package gr.rongasa.agregator.web.exception;
 
@@ -853,22 +788,85 @@ public class ExceptionHandlerImpl  /*extends ResponseEntityExceptionHandler */ {
     protected ResponseEntity<Object> handleSensorException(SensorException sensorException, WebRequest request) {
         return new ResponseEntity<>(new ErrorMessage(sensorException.getMessage(), null), new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
-
+    
 }
 ```
 
 ---
+
+## Schema initialization
+
+**properties file:** Enable liquidbase and set base changelog
+
+```yaml
+spring:
+  liquibase:
+    change-log: classpath:migration/master.xml
+```
+**Dependencies: ** Add the dependencies
+
+```groovy
+apply from: 'gradle/liquibase.gradle'
+implementation 'org.liquibase:liquibase-core'
+```
+
+---
+
+## Schema initialization
+
+
+
+**Liquibase gradle task that can create the schema changelog files:**
+
+`'gradle/liquibase.gradle'` Points to a gradle file that runs the main command of Liquidbase.
+
+*This Points to a gradle task definition that runs liquidbase Main class with specific input that compares database with hibernate entities and produces the next changelog.*
+
+**gradle.properties**
+
+```properties
+liquibase_hibernate5_version=3.6
+```
+
+---
+**master.xml**
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <include file="changelog/initial_schema_changelog.xml"/>
+    <include file="changelog/<feature>_schema_changelog.xml"/>
+    ...
+
+</databaseChangeLog>
+```
+
+---
+
+**changelog.xml**
+
+```xml
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="rongasal (generated)" id="1558682095036-1">
+        <createTable tableName="metric">
+            ...
+        </createTable>
+    </changeSet>
+    ...
+    <changeSet author="rongasal (generated)" id="1558682095036-3">
+          ...
+    </changeSet>
+</databaseChangeLog>
+```
+
 ### Exercise
-It become quite soon apparent that aggregator stores a significant number of data. Thus it is decided that you should switch aggregator &quot;micro service&quot; to Elastic-search.
+
+It become quite soon apparent that aggregator stores a significant number of data. Thus it is decided that you should switch aggregator "microservice" to elasticsearch.
 
 Tip: Spring data elastic does not behave well with Instant. I propose not to spend time with this. Try to use String for date-time.
 
-
-		</textarea>
-		<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
-		<script>
-			var slideshow = remark.create();
-		</script>
-		<script></script>
-	</body>
-</html>
