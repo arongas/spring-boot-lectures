@@ -1,26 +1,36 @@
 # Unit Testing
 
-Unit testing it self is a huge topic of equal importance of functional and non functional project features.
 
-No one can persuade a person against unit testing and actually every team needs to find it way on how to increase code quality
+
+## Importance of unit testing
+
+- Unit testing it self is a huge topic of equal importance of functional and non functional project features.
+- No one can persuade a person against unit testing and actually every team needs to find it way on how to increase code quality
+
 
 ## Arguments against unit testing
 
 - Application is small and there is no need to have unit testing
 
-   > Well.. I doubt that the application will always remain small and no maintenance will be needed
+   > Well.. I doubt that the application will always remain small and no maintenance will be needed.
+
+---
+
+   
+
+## Arguments against unit testing
 
 - Not possible in our code due to complexity
 
-   > Exactly in complex projects it is hard to maintain and it is hard when adding new features to be sure that something else is not affected. If one seriously weights the risk and the complexity then it is obvious that without unit testing:
+   > Complex projects are hard to maintain and it is also hard when adding new features to be sure that something else is not affected. If one weights the risk and the complexity then it is obvious that without unit testing:
    >
-   > New bugs will keep appearing due to new features. 
+   > - New bugs will keep appearing due to new features. 
    >
-   > Code quality improvements and design improvements are not possible because developers will be afraid of affecting the existing code.
+   > - Code quality improvements and design improvements are not possible because developers will be afraid of affecting the existing code.
    >
-   > Method/code duplication will be a **must do**
-   >
+   > - Method/code duplication will be a **must do**
 ---
+
 
 ## Arguments against unit testing
 
@@ -30,12 +40,18 @@ No one can persuade a person against unit testing and actually every team needs 
    >
    > This is where Inversion of Control of Spring assists
    >
-   > Also making clean code -classes and methods with separation of responsibility assists.
+   > Also making clean/small code -classes and methods with separation of responsibility assists.
 
+---
+
+## Arguments against unit testing
 - Not possible in our code due to legacy code structure
 
    > Time to gradually improve code quality and test the changes using unit testing
 
+---
+
+## Arguments against unit testing
 - Not possible in our code due knowledge of the team
 
    > Change this mindset in the team. 
@@ -46,41 +62,35 @@ No one can persuade a person against unit testing and actually every team needs 
    >
    > e.g. You may establish a workshop at the beginning of Sprint and/or one unit testing day where everyone creates unit tests
 
-   ---
+---
 
-   ## Arguments against unit testing
+## Arguments against unit testing
 
-   
 
 - Not possible in our code due to time limitations/constraints/features
 
-   > You have time limitations/constraints exactly because you spend time in fixing bugs or trying to work your way in code. If this is not the case, try to realize that without unit tests this is the direction/future issues and no, micro-services do not solve this issue.
-
-- In theory it is really important but when working in practice things get complicated
-
-   > I understand this argument, lets not try to change our every day's work towards the correct direction since it is difficult. But.. wait this all sounds wrong we need to fight our way towards improving things, isn't this what we really do?
+   > You have time limitations/constraints exactly because you spend time in fixing bugs or trying to work your way in code. 
 
 ---
 
    ## Arguments against unit testing
-
 - Unit testing makes changes in our code which increase the risk of the appearance of new bugs
 
-   > Yes, this is true. Unit tests really need changes in code sometimes. But this changes actually arte towards improving the overall code quality, aren't they? Then what is the problem ?
+   > Yes, this is true. Unit tests really need changes in code sometimes. But these changes actually are towards improving the overall code quality.
 
 ---
 
 ## Libraries, Concepts and ideas on Unit testing
 
-First what the specific test's intention is must be defined e.g.
+There is a set of different kind of test which may be called as unit tests:
 
-1. Java/class method
+1. Java/class method unit tests
 
-2. Overall functionality
+2. Overall functionality tests
 
-3. Integration with other systems
+3. Integration with other systems testing
 
-4. Test and Document rest api
+4. Rest API Test (and Documentation) 
 
    
 
@@ -88,37 +98,40 @@ Depending on this one can identify which things to mock/spy/replace and which th
 
 - **Mock/Spy libraries:** Mockito, PowerMock
 - **Replace:** Spring IoC and Profiles (org.springframework.boot:spring-boot-starter-test')
-- **Mock other services:** Wiremock, Spring cloud contract testing
-- **Test and document Rest Api:** Swagger, Rest Docks, Wiremock
+- **Mock other services:** Wiremock, Spring Cloud Contract Testing
+- **Test and document Rest Api:** Swagger, Rest Docks, MockMVC
 
 ---
 
-## JUnit introduction
+## JUnit Introduction
 
 | Annotation               | Description                                                  |
 | ------------------------ | ------------------------------------------------------------ |
-| @Test                    | This annotation mark test methods.                           |
+| @Test                    | This annotation marks test methods.                          |
 | @Before/@After           | These annotations mark methods that would run before or after every unit test |
-| @BeforeClass/@AfterClass | These annotations mark methods that would run before or after test starts. Methods would be static |
+| @BeforeClass/@AfterClass | These annotations mark methods that would run before or after test  class starts. Methods would be static |
 ---
 
 ## Assert Methods
 
-| Method                                         | Description                                                  |
-| ---------------------------------------------- | ------------------------------------------------------------ |
-| assertTrue(expression)/assertFalse(expression) | Test fails if expression is false/true                       |
-| assertEquals(expected,actual)                  | Fails if values are not equal (Be careful of what equals means in your objects) |
-| assertNull(obj)/assertNotNull(obj)             | fails if given object is not null/is nul                     |
-| Assertions.assertThat                          | Entry point for assertion methods for different types. Each method in this class is a static factory for a * type-specific assertion object. <br />Method assertThat exposes a big set of assertion methods which follow the natural language and is easy to follow |
-|                                                |                                                              |
+| Method                                               | Description                                                  |
+| ---------------------------------------------------- | ------------------------------------------------------------ |
+| assertTrue(expression)/<br />assertFalse(expression) | Test fails if expression is false/true                       |
+| assertEquals(expected,actual)                        | Fails if values are not equal (Be careful of what equals means in your objects) |
+| assertNull(obj)/assertNotNull(obj)                   | fails if given object is not null/is nul                     |
+| Assertions.assertThat                                | Entry point for assertion methods for different types. Each method in this class is a static factory for a * type-specific assertion object. <br />Method assertThat exposes a big set of assertion methods which follow the natural language and is easy to follow |
 
 ---
 
 ## Quick Mockito Introduction
 
-**Mocked** objects are objects which can be set in our code as if these were objects of a specific class but their behavior can be specified programmatically in our test code as below.
+**Mocked** objects are objects which can be set in our code as if these were objects of a specific class but their behavior can be specified programmatically in our test code.
 
 The same applies with **Spied** objects. The difference is that in a spy object any method that has not been mocked will behave as the real method of an object.
+
+---
+
+## Quick Mockito Introduction
 
 **Mockito.verify:**
 
@@ -171,7 +184,7 @@ e.g.
     private PersonRepository personRepository;
 ```
 
-**@Spy:** Creates a spy bean
+**@Spy/@SpyBean:** Creates a spy object/bean
 
 ```java
     @Spy
@@ -180,7 +193,9 @@ e.g.
 
 ---
 
-## Other Spring boot unit testing annotations
+
+
+## Spring boot unit testing annotations
 
 ```java
 @SpringBootTest
@@ -192,7 +207,15 @@ This marks a test as Spring Boot test. Which means that the complete (auto)confi
 ```java
 @ActiveProfiles("test")
 ```
-This marks the active profile when the test will run (here active profile is test). This means that the application-test.yml will be used in our tests. Commonly used to specify database (as H2) and embedded jms, etc
+This marks the active profile of the test. This means i.e. that the application-test.yml will be used in our tests. 
+
+This methodology is most commonly used to specify database (as H2), embedded JMS, etc 
+
+application-test.yml should be located in test/resources folder
+
+
+
+## Spring boot unit testing annotations
 
 ```java
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
@@ -201,7 +224,11 @@ This marks the active profile when the test will run (here active profile is tes
 
 This Annotation marks the spring context as dirty. This means that one unit test will not affect the other in terms of Spring boot context. Commonly used when spring boot application context is affected but spring boot is not capable of knowing this e.g. durable JMS subscription exists.
 
-## JUnit Test Context
+> Use this in all tests when you got the feeling that one test class affects the others.
+
+
+
+## JUnit Test Context (creating the application to test)
 
 Spring boot Web application with postgresql connectivity.
 
@@ -219,13 +246,10 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @NotEmpty
     private String firstName;
-
     @NotEmpty
     private String lastName;
-
 }
 ```
 
@@ -447,6 +471,8 @@ public class PersonServiceImplTest {
     }
 ```
 
+---
+
 **H2 integration:**
 
 ```java
@@ -497,6 +523,8 @@ public void findPersonByFirstName() {
 }
 ```
 
+---
+
 **Rest Interface testing:**
 
 ```java
@@ -526,7 +554,7 @@ public class PersonResource {
 
 **Exercise**
 
-Unit test the unsecure Aggregator in terms of it integration with JMS messages.
+Unit test the unsecure version of Aggregator.
 
 
 
