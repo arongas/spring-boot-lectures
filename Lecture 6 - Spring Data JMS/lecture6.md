@@ -7,7 +7,7 @@
 
 ---
 
-## ActiveMQ
+## ActiveMQ Conspepts
 
 - Queues vs Topics
 
@@ -27,7 +27,7 @@
 
 ---
 
-## ActiveMq
+## Spring Boot/ActiveMQ Topics
 
 **Dependency:**
 
@@ -46,7 +46,7 @@ Spring provides the following types of *ConnectionFactory*:
 - **SingleConnectionFactory –** Will maintain one connection with the broker. 
 - **CachingConnectionFactory –** Will maintain one connection with the broker but also caching the *Sessions*, created with the broker.
 
-## Queue Consumer
+## Queue Consumer Development
 
 Add the dependency
 
@@ -68,11 +68,11 @@ server:
 ```
 
 - Only actual required property is to denote spring boot that the broker is not an embedded activemq.
-- If broker is running at a different machine, all that is required is the broker's URL
+- If broker is running at a different machine, it is also required that the broker's URL is specified
 
 ---
 
-## JMS Configuration
+## JMS Configuration for Consumer
 
 ```java
 @Configuration
@@ -85,7 +85,7 @@ public class JMSConfiguration {
 
 ---
 
-## JMS Consumer
+## JMS Consumer Listener
 
 ```java
 @Service
@@ -101,9 +101,11 @@ public class JmsService {
 
 Annotated beans with `JMSListener` can retrieve the message sent from the producer.
 
-The default `MessageConverter` is able to convert only basic types (such as `String`, `Map`, `Serializable`). String is of course possible to be received from a Consumer. In case complex types need to be received, JMS Message converter needs to be enhanced. 
+The default `MessageConverter` is able to convert only basic types (such as `String`, `Map`, `Serializable`). In case complex types need to be received, JMS Message converter needs to be enhanced. 
 
-## JMS Producer
+---
+
+## JMS Producer Configuration
 
 Again include the aActivemq dependency and specify the properties.
 
@@ -120,11 +122,16 @@ server:
   port: 8182
 ```
 
-- With `spring.jms.template.delivery-mode=persistent` The message persistency is specified. Of course the persistency is specified at message producer side.
-- Delivery mode can be specified in the `JmsTemplate` for all messages or can be specified per message
-- Retries mechanism can be configured. 
+- With `spring.jms.template.delivery-mode=persistent` The message persistency is specified. The persistency is specified at message producer side.
 
-## JMS Producer
+- Delivery mode can be specified in the `JmsTemplate` for all messages or can be specified per message
+
+- Retries mechanism can also be configured. 
+
+---
+
+
+## JMS Producer Service
 
 ```java
 @Service
@@ -143,14 +150,18 @@ public class Producer {
 
 ```
 
-- Any method can `JmsTemplate` and use send method, first argument is the destination name and second argument the MessageCreator. 
+---
+
+## JMS Producer Service (cont.)
+
+- Any method can autowire `JmsTemplate` and use the exposed send methods, first argument is the destination name and second argument the MessageCreator. 
 - The default destination is queue. 
-- The default destination can be changed
+- The default destination can be changed from configuration file
 - If same application needs to send to topics and queues using `JmsTemplate`, there is a sent command that has as Destination object the destination and not as string.
 
 ---
 
-## JMS Producer
+## JMS Producer Service (cont.)
 
 Another way to send   JMS message is to Autowire and use `JmsMessagingTemplate`
 
@@ -167,7 +178,7 @@ jmsMessagingTemplate.send("test.messages",
 
 ---
 
-## From Queue to Topic
+## Move (at developed service) from Queue to Topic
 
 ```yaml
 spring:
@@ -179,13 +190,14 @@ This needs to be done in both producer and consumer
 
 ---
 
-## Durable Topic subscription
+## Using (at developed service) Durable Topic subscription
 
 - Producer is not affected
 
 - Only topics have meaning with respect to durable subscription since in queues the point-to-point communication makes it that only one consumer will consume the message and that the message will be stored into the queue until consumer receives the message.
 
 ---
+## Using (at developed service) Durable Topic subscription (cont.)
 
 ```yaml
 spring:
@@ -205,13 +217,21 @@ server:
 > For durable subscribers, sessions cannot be cached (`CachingConnectionFactory ` shouldn't be used)
 
 ---
-There is the need to configure the JMS listener connection factory and set the subscription as durable and also set the client id
+
+## Using (at developed service) Durable Topic subscription (cont.)
+
+There is the need to configure the JMS listener connection factory and set the subscription as durable and also set the client id.
 
 ```java
     factory.setSubscriptionDurable(true);
     factory.setClientId("consumer-subscriber");
 ```
+
+This factory then needs to be used when creating a JMS listener.
+
 ---
+
+## Using (at developed service) Durable Topic subscription (cont.)
 
 ```java
 package gr.rongasa.jms.consumer;
@@ -239,6 +259,9 @@ public class JMSConfiguration {
 ```
 
 ---
+
+
+## Using (at developed service) Durable Topic subscription (cont.)
 
 JMS service now needs to use this connection factory. Note that concurrency here cannot be greater than 1. At durable subscriptions, the client id should be unique at **broker**.
 
@@ -277,6 +300,7 @@ spring:
 
 - After a message expires it is sent to the dead letter queue
 
+---
 ## Redeliveries and Time-To-Live
 
 - A Consumer, may fail to consume a message, for instance a required resource is unavailable and consumer throw s exception.
@@ -285,21 +309,9 @@ spring:
 - After maximum redeliveries are reached, message is moved to dead letter queue.
 
 ---
+## Redeliveries and Time-To-Live (cont.)
 
 ```java
-package gr.rongasa.jms.consumer;
-
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.RedeliveryPolicy;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jms.annotation.EnableJms;
-import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
-import org.springframework.jms.connection.SingleConnectionFactory;
-import javax.jms.ConnectionFactory;
-
 @Configuration
 @EnableJms
 public class JMSConfiguration {
@@ -314,9 +326,21 @@ public class JMSConfiguration {
 ```
 
 ---
+## Redeliveries and Time-To-Live
+
+```yaml
+producer:
+  jms:
+    redelivery:
+      backOffMultiplier: 3
+      useExponentialBackOff: false
+      maximumRedeliveries: 2
+```
+
+---
+## Redeliveries and Time-To-Live  (cont.)
 
 ```java
-package gr.rongasa.jms.consumer;
 @Configuration
 @EnableJms
 public class JMSConfiguration {
@@ -345,16 +369,7 @@ public class JMSConfiguration {
 
 ---
 
-```yaml
-producer:
-  jms:
-    redelivery:
-      backOffMultiplier: 3
-      useExponentialBackOff: false
-      maximumRedeliveries: 2
-```
-
----
+## Redeliveries and Time-To-Live  (cont.)
 
 **Some notes:**
 
@@ -389,6 +404,8 @@ public class Content {
 
 ---
 
+## Json JMS message serialization/deserialization (cont.)
+
 In both consumer and producer the following bean is needed in order to de/serialize the DTO to json
 
 ```java
@@ -402,6 +419,8 @@ public MessageConverter jacksonJmsMessageConverter() {
 ```
 
 ---
+
+## Json JMS message serialization/deserialization (cont.)
 
 At consumer side, listener will no longer receive String but a Message 
 
@@ -417,6 +436,7 @@ public class JmsService {
 ```
 
 ---
+## Json JMS message serialization/deserialization
 
 - _type is a message header property that contains a key, typically the class name (FQN) assisting Jackson to Serialize/Deserialize based on a granted class structure.
 - Class Content in above Producer and Consumer has the same package. This is not always common. 
@@ -439,7 +459,7 @@ public MessageConverter jacksonJmsMessageConverter() {
 
 ## Exercise
 
-From the previous lecture there is an Aggregator and a Sensor using JPA. 
+From the previous lectures (Lecture 4 -Web\exercises) there is an Aggregator and a Sensor using JPA. 
 
 - Remove the registration process of sensors and make the sensors app send messages with sensor data to a Queue. 
 
