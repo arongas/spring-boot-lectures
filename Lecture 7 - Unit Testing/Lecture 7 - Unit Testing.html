@@ -133,7 +133,7 @@ class: center, middle, main-title
 
 
 ---
-## Arguments against unit testing
+## Arguments against unit testing (cont.)
 
 - Not possible in our code due to complexity
 > Complex projects are hard to maintain and it is also hard when adding new features to be sure that something else is not affected. If one weights the risk and the complexity then it is obvious that without unit testing:
@@ -145,7 +145,7 @@ class: center, middle, main-title
 
 
 ---
-## Arguments against unit testing
+## Arguments against unit testing (cont.)
 
 - Not possible in our code due to dependencies
 > This is where libraries that mock everything else exist. 
@@ -156,14 +156,14 @@ class: center, middle, main-title
 
 
 ---
-## Arguments against unit testing
+## Arguments against unit testing (cont.)
 
 - Not possible in our code due to legacy code structure
 > Time to gradually improve code quality and test the changes using unit testing
 
 
 ---
-## Arguments against unit testing
+## Arguments against unit testing (cont.)
 
 - Not possible in our code due knowledge of the team
 > Change this mindset in the team. 
@@ -176,14 +176,14 @@ class: center, middle, main-title
 
 
 ---
-## Arguments against unit testing
+## Arguments against unit testing (cont.)
 
 - Not possible in our code due to time limitations/constraints/features
 > You have time limitations/constraints exactly because you spend time in fixing bugs or trying to work your way in code.
 
 
 ---
-## Arguments against unit testing
+## Arguments against unit testing (cont.)
 
 - Unit testing makes changes in our code which increase the risk of the appearance of new bugs
 > Yes, this is true. Unit tests really need changes in code sometimes. But these changes actually are towards improving the overall code quality.
@@ -475,8 +475,12 @@ spring:
 ```
 
 ---
-**Simple Test:**
+class: center, middle, title
 
+## Creating unit tests
+
+---
+### Simple Test
 ```java
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -500,8 +504,7 @@ public class DateTimeUtilsTest {
 ```
 
 ---
-**Mocked database access:**
-
+### Mocked database access (Repository)
 ```java
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -524,8 +527,7 @@ public class PersonServiceImplTest {
 ```
 
 ---
-**Mocked database access:**
-
+### Mocked database access (Repository) -cont.-
 ```java
  @Test
     public void findPersonByFirstName() {
@@ -549,8 +551,7 @@ public class PersonServiceImplTest {
 ```
 
 ---
-**H2 integration:**
-
+### Using H2 as database
 ```java
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -580,8 +581,7 @@ public class PersonServiceImplTest_h2 {
 ```
 
 ---
-**H2 integration:**
-
+### Using H2 as database (cont.)
 ```java
 @Test
 public void findPersonByFirstName() {
@@ -600,35 +600,126 @@ public void findPersonByFirstName() {
 ```
 
 ---
-**Rest Interface testing:**
+### Using H2 as database (cont.)
+```groovy
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    initialization-mode: always
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;
+    username: sa
+    password: sa
+    platform: h2
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: h2
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+    show-sql: false
+```
 
+---
+### Rest Interface testing
 ```java
-@RestController
-@RequiredArgsConstructor
-public class PersonResource {
-    public final PersonService personService;
 
-    @GetMapping()
-    public ResponseEntity get( Pageable pageable){
-        return ResponseEntity.ok(personService.findAllPersons(pageable));
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@Import(value = {MockMvcAutoConfiguration.class})
+@ActiveProfiles("test")
+public class PersonResourceTest {
+
+    @MockBean
+    PersonService personService;
+    @Autowired
+    private MockMvc mockMvc;
+
+    private URI baseUri;
+
+    @Before
+    public void setUp() throws URISyntaxException {
+        baseUri = new URI("/");
+        List<PersonDTO> personDTOList = new ArrayList<>();
+        personDTOList.add(PersonDTO.builder().firstName("Alex").lastName("Rongas").build());
+        personDTOList.add(PersonDTO.builder().firstName("Joe").lastName("Do").build());
+        personDTOList.add(PersonDTO.builder().firstName("Joe2").lastName("Do2").build());
+        PageImpl<PersonDTO> page = new PageImpl<>(personDTOList);
+        when(personService.findAllPersons(any(Pageable.class))).thenReturn(page);
+        when(personService.save(any(PersonDTO.class))).thenAnswer((Answer<PersonDTO>) invocation -> (PersonDTO) invocation.getArguments()[0]);
     }
 
-    @GetMapping("firstName")
-    public ResponseEntity get(@RequestParam String firstName, Pageable pageable){
-        return ResponseEntity.ok(personService.findPersonsByFirstName(firstName,pageable));
+   ...
+}
+```
+
+---
+### Rest Interface testing (cont.)
+```java
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@Import(value = {MockMvcAutoConfiguration.class})
+@ActiveProfiles("test")
+public class PersonResourceTest {
+    @Test
+    public void get() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(baseUri).accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("content", hasSize(3)))
+                .andExpect(jsonPath("$.content[0].firstName", is("Alex")))
+                .andExpect(jsonPath("$.content[0].lastName", is("Rongas")))
+                .andExpect(jsonPath("$.content[1].firstName", is("Joe")))
+                .andExpect(jsonPath("$.content[1].lastName", is("Do")))
+                .andExpect(jsonPath("$.content[2].firstName", is("Joe2")))
+                .andExpect(jsonPath("$.content[2].lastName", is("Do2")))
+                .andReturn();
+        String jsonResponse = mvcResult.getResponse().getContentAsString();
+        DocumentContext json = JsonPath.parse(jsonResponse);
+        assertThatJson(json).field("content[0]").field("firstName").isEqualTo("Alex");
     }
 
-    @PostMapping
-    public ResponseEntity save(@RequestBody PersonDTO personDTO){
-        return ResponseEntity.ok(personService.save(personDTO));
+
+}
+```
+
+---
+### Rest Interface testing (cont.)
+```java
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@Import(value = {MockMvcAutoConfiguration.class})
+@ActiveProfiles("test")
+public class PersonResourceTest {
+    @Test
+    public void save() throws Exception {
+        JSONObject person = new JSONObject()
+                .put("firstName", "Alex")
+                .put("lastName", "Rongas");
+
+        mockMvc.perform(MockMvcRequestBuilders.post(baseUri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(person.toString()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("firstName", is("Alex")))
+                .andExpect(jsonPath("lastName", is("Rongas")));
+
     }
 }
 ```
 
 ---
-**Exercise**
-
-Unit test the unsecure version of Aggregator.
+### Exercise
+Unit test the version of Aggregator created in lecture `Lecture 6 Spring Data JMS/exersize`
 
 
 		</textarea>
