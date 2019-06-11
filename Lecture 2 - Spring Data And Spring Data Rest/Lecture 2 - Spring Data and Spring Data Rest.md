@@ -2,11 +2,13 @@
 
 ## Spring Data framework 
 
-Spring Data: https://spring.io/projects/spring-data
+- Spring Data: https://spring.io/projects/spring-data
 
-Spring Data’s mission is to provide a familiar and consistent, Spring-based programming model for data access while still retaining the special traits of the underlying data store.
+- Spring Data’s mission is to provide a familiar and consistent, spring-based programming model for data access while still retaining the special traits of the underlying data store.
 
-It makes it easy to use data access technologies, relational and non-relational databases, map-reduce frameworks, and cloud-based data services. 
+- It makes it easy to use data access technologies, relational and non-relational databases, map-reduce frameworks, and cloud-based data services. 
+
+---
 
 ### Features
 
@@ -14,15 +16,10 @@ It makes it easy to use data access technologies, relational and non-relational 
 
 - Support for transparent auditing (created, last changed)
 
-- Possibility to integrate custom repository code
-
-- Advanced integration with Spring MVC controllers
-
 - Data Pagination
 
 ---
 
-  
 
 ## Most common Spring Data projects
 
@@ -55,13 +52,11 @@ It makes it easy to use data access technologies, relational and non-relational 
 
 > Start from eshop code of first lecture. Alternatively one may wish to start from spring initilizr as an exercise. 
 >
-> At any case please add  JPA, Postgresql, Web and Lombok.
+> At any case please add  `JPA`, `Postgresql`, `Web` and `Lombok`.
 >
 > Next slides focus more at changes compared to the application of the eshop application of the previous lecture.
 
-
-
-The build.gradle ends up as follows:
+**The build.gradle ends up as follows**:
 
 ---
 
@@ -116,7 +111,7 @@ spring:
     jpa:
       repositories:
         enabled: true
-  datasource:
+  datasource:  # Setup datasource
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 5
@@ -212,14 +207,15 @@ public class DatabaseConfiguration {
 
 ## Result
 
-- The conversion from Spring Data elasticSearch to spring data JPA is done. This is what is meant with familiar and **consistent** model for data layer access.
+- The conversion from Spring Data elasticSearch to spring data JPA is done. This is what is meant with familiar and **consistent** model for data layer access. 
+  Consider how few changes were made to move from two completely different database technologies.
 - We could allow the concurrent existence  of elasticSearch and JPA connection
 - We changed domain id from String to Long. Elastic search performs better/easier with String id while 
-- Be careful with the @Id and from which path this is imported from. `javax.persistence.Id;`is for JPA and `org.springframework.data.annotation.Id;` is for non relational databases.
+- Be careful with the @Id and from which path this is imported from. `javax.persistence.Id;` is for JPA and `org.springframework.data.annotation.Id;` is for non relational databases.
 
 ---
 
-## Means of database Queries
+## Means of Database Queries
 
 The repository proxy has two ways to derive a store-specific query from the method name:
 
@@ -291,7 +287,7 @@ long countByType(String type);
 
 ## Query 
 
-JPQL or native queries are supported in spring data repositories
+JPQL or native queries are supported in Spring data repositories
 
 e.g.
 
@@ -309,16 +305,18 @@ Inventory getInventoryByNamedParam(@Param("descr") String description);
 
 ---
 
-> Propose to avoid this method. However, although spring data provides practically almost everything, sometimes JPA query may be the only way.
->
-> * Hard to move from one database engine to another
->
-> * Less readable
->
-> * More difficult to detect issues before running the application
->
->   One reason that query may be needed is when we wish to query something like the following 
->   `(entity.x=:a OR entity.x=:b) AND (entity.y=:c OR entity.y=:d)`
+### Query 
+
+Propose to avoid Queries and even more native queries. However, although spring data provides practically almost everything, sometimes JPA query may be the only way.
+
+* Hard to move from one database engine to another
+
+* Less readable
+
+* More difficult to detect issues before running the application
+
+One reason that query may be needed is when we wish to query something like the following 
+`(entity.x=:a OR entity.x=:b) AND (entity.y=:c OR entity.y=:d)`
 
 ---
 
@@ -358,9 +356,7 @@ public interface GroupRepository extends CrudRepository<GroupInfo, String> {
 
 ## Named Entity Graph
 
-Instead of constructing and using EntityGraph inside repository we can create named entity graphs and then use these inside our repository
-
-
+Instead of constructing and using EntityGraph inside repository one create named entity graphs and then use these inside the repository
 
 ```java
 @Entity
@@ -371,7 +367,6 @@ Instead of constructing and using EntityGraph inside repository we can create na
   }
 )
 public class GroupInfo {
-
   // default fetch mode is lazy.
   @ManyToMany
   List<GroupMember> members = new ArrayList<GroupMember>();
@@ -382,7 +377,6 @@ public class GroupInfo {
 ```java
 @Repository
 public interface GroupRepository extends CrudRepository<GroupInfo, String> {
-
   @EntityGraph(value = "members-graph")
   GroupInfo getByGroupName(String name);
 }
@@ -394,18 +388,16 @@ public interface GroupRepository extends CrudRepository<GroupInfo, String> {
 
 JPA prerequisite information
 
-- @OneToOne: Eager fetch
-- @OneToMany: Lazy fetch
-- Commonly relationships are bidirectional (when possibly make them unidirectional).
+- `@OneToOne`: Eager fetch
+- `@OneToMany`: Lazy fetch
+- Typically relationships are bidirectional (when possibly make them unidirectional).
 
 Attention:
 
-- Bidirectional relationships during update and submit and first level cache.
-
-- Take special care with equals, hashCode and toString overrides at entity level when having relationships (especially now with lombok)
+- Bidirectional relationships during update and submit and first level cache. One needs to update both directions to avoid problems.
+- Take special care with equals, hashCode and toString overrides at entity level when having relationships (**especially now with lombok**)
   - Danger of stack overflow
-  - Danger of performance issues simply when adding just a log line
-  
+  - Danger of performance issues simply when adding just logging
 - private methods annotated with transaction will not cope into opening a transaction.
 
 ---
@@ -414,31 +406,32 @@ Attention:
 
   
 
-- Use transactions at Service level at most
+- Use transactions at Service level at most Avoid opening transaction at controller.
   
-- Mapping of database entities into data transfer objects a good way of controlling transactions 
+- Mapping of database entities into data transfer objects is a good way of controlling transactions 
   
   - Only get from entity what is needed
   - Set into entity before saving into database bidirectional relationships
   
 - Usage of EntityGraph a good way of keeping transaction as small as possible
 
-- When using relational database utilize   database versioning and migration tools like Liquidbase or Flyway
+- When using relational database utilize database versioning and migration tools like Liquidbase or Flyway
 
   - Don't skip this step as migrating from one version to another will be problematic without these tools and also it is harder to introduce these tools at a latter stage.
 
 ---
 
-## Spring Data Rest
+# Spring Data Rest
 
-Spring Data Rest is an extension of Spring Data that exposes over REST the spring data methods that exist in spring data repositories.
+---
 
-> - Impressive at first look and usefullt for rapid programming
+Spring Data Rest is an 'extension' of Spring Data that exposes over REST the spring data methods that exist in spring data repositories.
+
+> - Impressive at first look and useful for rapid development results.
 > - Use it only for testing, development prototype or only when product is really simple
->   - If used in bigger products you bind domain model with rest consumer. Architecturally wise this is huge mistake that sooner or latter will add bigger complexity.
->   - Spring data rest is the best demonstration of HATEOAS
+>   - If used in bigger products you bind domain model with rest consumer. Architecturally wise this is huge mistake that sooner or latter it will add huge complexity.
+>   - Spring data rest is the best demonstration of HATEOAS.
 >
-> 
 
 ---
 
@@ -672,7 +665,9 @@ curl -X PUT \
 
 ---
 
-## Spring Data REST Tips And Tricks
+# Spring Data REST Tips And Tricks
+
+---
 
 - You can annotate as `@RestResource(exported = false)` a Repository (method or class) to define it as not exposed over web
 - You can configure Repositoriies (i.e. expose id) by using RepositoryRestConfigurer
@@ -705,7 +700,9 @@ implementation 'org.springframework.data:spring-data-rest-hal-browser'
 >
 > A UI regarding exposed rest methods is provided.
 
-## Spring Data Tips And Tricks
+# Spring Data Tips And Tricks
+
+---
 
 You can load initial data via CommandLineRunner
 
@@ -725,10 +722,12 @@ public class DatabaseDataInitialization implements CommandLineRunner {
 }
 ```
 
-## Spring Data MongoDB
+# Spring Data MongoDB
+
+---
 
 - Lets switch this project now to NoSQL/MongoDB.
-- Then way we have seen the same project in ElasticSearch, in JPA (Postgresql) and MongoDB. 
+- Then we have seen the same project in ElasticSearch (1st lecture), in JPA (Postgresql) and MongoDB. 
 
 ---
 
@@ -748,6 +747,8 @@ public class DatabaseDataInitialization implements CommandLineRunner {
 
 - Remove from Domain objects and repositories anything that has to do with EntityGraph (@EntityGraph and @NamedEntityGraph)
 
+- Ensure @Id is from import org.springframework.data.annotation.Id
+
   
 
   ---
@@ -765,7 +766,7 @@ public class DatabaseDataInitialization implements CommandLineRunner {
 - In database configuration replace EnableJpaRepositories with EnableMongoRepositories
 
   
-
+---
 # Exercise 1
 
 Purpose: Gain experience with Spring Data and Spring Data Rest. 

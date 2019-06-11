@@ -13,11 +13,10 @@
   - View/Frontend is served from the same or different servers (apache2, nginx) as pure html, script,... files. No view interceptor is involved.
   - Internationalization is part of frontend and server side is not involved on this
 
-  
 
 ## Spring Boot with Thymeleaf
 
-Dependencies:
+**Dependencies:**
 
 ```groovy
 plugins {
@@ -25,23 +24,16 @@ plugins {
 	id 'java'
 }
 apply plugin: 'io.spring.dependency-management'
-
 group = 'gr.rongasa'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-repositories {
-	mavenCentral()
-}
+configurations { compileOnly { extendsFrom annotationProcessor } }
+repositories { 	mavenCentral() }
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.webjars:bootstrap:4.3.1'
 }
 ```
@@ -137,15 +129,12 @@ body {
     padding: 3rem 1.5rem;
     text-align: center;
 }
-
 h1{
     color:darkblue;
 }
-
 h2{
     color:blue;
 }
-
 .list{
     color: darkgray;
 }
@@ -256,15 +245,16 @@ public LocaleChangeInterceptor localeChangeInterceptor() {
 
 ## Actuator Endpoints
 
-- Spring Boot microservices, need to allow other systems to monitor and interact with the application.  
+- Actuator endpoints are significant for micro-services.
+
+  - Spring Boot micro-services, need to allow other systems to monitor and interact with the application.  
+  - Devops need endpoints to monitor the health and status of the system and collect metrics.
 
 - Details of the endpoints can be found in Spring boot documentation:
 
   https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html
 
-  
-
-- In order to enable these
+- In order to enable actuator endpoints
 
   - Add actuator as dependency 
 
@@ -286,6 +276,7 @@ public LocaleChangeInterceptor localeChangeInterceptor() {
 
 | ENDPOINT       | USAGE                                                        |
 | -------------- | ------------------------------------------------------------ |
+| `/info`         | Displays arbitrary application info.                         |
 | `/env`         | Returns list of properties in current environment            |
 | `/health`      | Returns application health information.                      |
 | `/configprops` | Displays a collated list of all `@ConfigurationProperties`   |
@@ -296,7 +287,42 @@ public LocaleChangeInterceptor localeChangeInterceptor() {
 
 ---
 
-## Properties
+## Actuator Endpoints with Prometheus
+
+- Prometheus is an opensource monitoring and alerting toolkit that integrates well with Grafana and is frequently used.
+- Spring boot actuator endpoints expose for Prometheus everything needed very easily.
+
+## Actuator Endpoints with Prometheus
+
+**Dependencies:**
+
+```groovy
+	compile 'io.micrometer:micrometer-core:1.1.4'
+	compile 'io.micrometer:micrometer-registry-prometheus:1.1.4'
+```
+
+**Configuration:**
+
+```yaml
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+```
+
+
+
+## Properties/Configuration
 
 - Application properties support profiles. With profiles developers can have different configuration properties for different environments, most commonly, production (prod), development (dev), unit testing (test).
 
@@ -349,7 +375,7 @@ management:
 
 ---
 
-## Setting Application parameters from command Line
+## Setting application properties from command Line
 
 - `java -jar <jar file.jar>`
 
@@ -368,7 +394,8 @@ management:
 ## Environment Variables And Default Variables
 
 - Any environment variable is accessible from application properties files. 
-- Any program argument can be used from application properties
+- Any application property can be set from environment variables
+- This is very useful when attributes should be set from a docker-compose file or kubernates or even bare metal deployments.
 - Default values can be specified
 
 ```yaml

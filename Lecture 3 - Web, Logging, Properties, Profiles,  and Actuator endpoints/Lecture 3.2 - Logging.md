@@ -1,12 +1,14 @@
 ## Logging
 
-- Things always go bad and automation of Spring boot does make things sometimes harder to troubleshoot.
+- Things always go bad and automation of Spring boot does make things harder to troubleshoot.
 
-  - Debugging with the ide is a first thing to use
-  - Logging is the second
+  - Debugging with the IDE is a first thing to use
+    - Learn to attach to remote debugger. Especially with appearance of Docker, this is necessary (but also easy).
+  - Logging is the second thing to do to find out what is problematic
 
-- Spring boot has chosen Logback for logging
+- Spring boot has chosen Logback for logging.
 
+  - This can change easily but I find no reason to do so.
   
 ---
 - Enabling debug mode via application.yaml
@@ -56,9 +58,7 @@ logging:
   - Log4j2 Configuration Logging
     - Remove dependency org.springframework.boot:spring-boot-starter-logging
     - Add Dependency org.springframework.boot:spring-boot-starter-log4j2
-    - Configure log4j via
-      - log4j2-spring.xml
-      - log4j2.xml
+    - Configure log4j via log4j2-spring.xml or log4j2.xml
 
 ---
 

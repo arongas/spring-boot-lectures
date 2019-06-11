@@ -37,7 +37,9 @@
 
 ---
 
-## Spring Boot significance
+# Spring Boot
+
+## Spring Boot Significance
 
 * **Auto Configuration** 
 
@@ -61,10 +63,10 @@
 
 ---
 
-## Spring Initializr
+## Spring Boot Initializr
 
 - Start from scratch or use a tool to create the project and define the dependencies?
-- Quickly setup a project
+- Quickly setup a project (<https://start.spring.io/>)
 
 ![](assets\initializr.png)
 
@@ -93,16 +95,20 @@
 - Spring Starter Actuator
 - Spring Starter Logging
 
+e.g.
 
+`implementation 'org.springframework.boot:spring-boot-starter-security'`
 
 > A good example of what Spring boot team means with the term 'opinionated' for libraries is logging which by default uses Logback or spring data which by default uses Hibernate.
 
-## Spring Boot Auto Configuration
+---
 
-- Spring Boot auto-configuration attempts to automatically configure your Spring application based on the jar dependencies that you have added. 
+## Spring Boot Auto-Configuration
+
+- Spring Boot auto-configuration attempts to automatically configure your Spring application based on the dependencies that you have added. 
 - Auto-configuration is non-invasive. At any point, you can start to define your own configuration to replace specific parts of the auto-configuration.
 - Auto Configuration uses sensible defaults 
-- Auto Configuration uses user configuration to override defaults
+- Auto Configuration allows user to override default configuration
 
 > Don't feel like something got control of your application development. It merely provides aid for rapid development. There are plenty of ways to override the default configurations.
 
@@ -150,19 +156,25 @@
 
 ----
 
-## Spring Boot Application Example
+## Spring Boot Application Example (eshop application)
 
-- Start a project with Spring initilizr (<https://start.spring.io/>)
+- Open eshop application 
+
+  **OR**
+
+-  Start a new project with Spring initilizr (<https://start.spring.io/>)
+
 - Use:
   - Java 8
   - Spring boot 2.1
   - Gradle
   - Add as single dependency the Web
+  
 - Import to Intellij
 
 ---
 
-### Gradle
+### Gradle file
 
 ```groovy
 plugins {
@@ -189,28 +201,26 @@ dependencies {
 
 ---
 
-### Auto Configuration
+### Gradle and Auto-Configuration
 
-* Notice how few are the dependencies
-* Spring boot plugin is:
-  * Package executable jar or war archives
-  * Run Spring Boot applications
-  * Use the dependency management provided by `spring-boot-dependencies` [here](https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/pom.xml)
-* Since we added Web, all required libraries for a simple web application are added.
+Notice how few are the dependencies
 
+Spring boot plugin is:
+* Helps creating executable jar (fat jar) or war archives
+* Uses the dependency management provided by `spring-boot-dependencies` [here](https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/pom.xml)
 
-- With web MVC jars inside the application context, auto configuration configures the application as a web MVC application. So there is not need for web.xml or servlet.xml 
-  
-
-Key behaviors such as setting up a DispatcherServlet are automatically activated.
+- Since Web dependency exists, all required libraries for a simple web application are added.
 
 
+* With web MVC jars inside the application context, auto configuration configures the application as a web MVC application. So there is not need for web.xml or servlet.xml 
+
+- Key behaviors such as setting up a DispatcherServlet are automatically activated.
 
 > This magic happens inside WebMvcAutoConfiguration class
 
 ---
 
-## Rest Controller
+### Rest Controller
 
 > Lets create a rest controller
 
@@ -234,6 +244,7 @@ public class GreetingsController {
 ```
 
 ---
+### Common Rest Annotations
 
 | Controller Annotation | Description                                                  |
 | --------------------- | ------------------------------------------------------------ |
@@ -241,21 +252,23 @@ public class GreetingsController {
 | @RestController       | Introduced in Spring 4.0 to simplify the creation of RESTful web services. It’s a convenience annotation that combines @Controller and @ResponseBody |
 | @RequestMapping       | At controller/class level denotes the original path of the controller. At method level denotes the path, what this method consumes or produces along with the http method type. |
 | @ResponseBody         | Automatic serialization of the return object into the HttpResponse |
-| @GetMapping           | Convenient annotation for RequestMapping with method GET.    |
-| @PostMapping          | Convenient annotation for RequestMapping with method POST.   |
+
+---
+## Common Rest Annotations
+
+
+| Controller Annotation | Description                                                |
+| --------------------- | ---------------------------------------------------------- |
+| @GetMapping           | Convenient annotation for RequestMapping with method GET.  |
+| @PostMapping          | Convenient annotation for RequestMapping with method POST. |
+| @PutMapping           | Convenient annotation for RequestMapping with method GET.  |
+| @PathVariable         | Denotes a java method property as http path parameter      |
+| @RequestParam         | Denotes a java method property as query parameter          |
+| @RequestBody          | Denotes a java method property as request body             |
 
 ---
 
-| Controller Annotation | Description                                               |
-| --------------------- | --------------------------------------------------------- |
-| @PutMapping           | Convenient annotation for RequestMapping with method GET. |
-| @PathVariable         | Denotes a java method property as http path parameter     |
-| @RequestParam         | Denotes a java method property as query parameter         |
-| @RequestBody          | Denotes a java method property as request body            |
-
----
-
-## Build and Run
+### Build and Run
 
 **Build:**
 
@@ -267,11 +280,11 @@ public class GreetingsController {
 
 ----
 
-## Connection with ElasticSearch and Expose Domain Object via Rest Interface
+## Connection with ElasticSearch and Expose Domain Object via Rest Interface -inventory project-
 
 > An example of how quickly a meaningful application can be created with with Spring boot. 
 >
-> Below Spring initializer will be used and a few lines of code will be written to create a small CRUD web/rest application
+> Below Spring initializer will be used and a few lines of code will be written to create a small CRUD web/rest application.
 
 ---
 
@@ -303,6 +316,7 @@ dependencies {
 ```
 
 ---
+### Gradle (cont.)
 
 - ​	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
@@ -328,6 +342,7 @@ This adds everything needed for web application monitoring
   This adds everything needed for Lombok to be used
 
 ---
+### Lombok-IntelliJ
 
 > Note: In Intellij for lombok to run, you need to:
 >
@@ -350,7 +365,7 @@ Not keeping a clean structure will make code not easily maintainable since you w
 
 ---
 
-### Spring Boot Project Structure
+### Spring Boot Project Structure (cont.)
 
 - Create a package where you keep all your service/business logic classes i.e. gr.rongasa.eshop.service
   - Ensure that for every service class you have also an interface 
@@ -370,6 +385,8 @@ Not keeping a clean structure will make code not easily maintainable since you w
 - YAML is more readable 
 - YAML format can hold multiple profiles in a single file
 - Config Server will favor .yml  over .properties (in spring cloud)
+
+Common configuration properties: [Common configuration properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
 ---
 
@@ -586,12 +603,12 @@ You wish to create a simple Library Management System where users can add or fin
 }
 ```
 
-You should create a java web application that allows adding into elasticsearch such information and allowing this information to be accessed using the tracking id or the type of the book or the name of the book.
+You should create a java web application that allows adding into elasticsearch such information and allowing this information to be accessed (over rest) using the tracking id or the type of the book or the name of the book.
 
 ## Requirements 
 
 You are requested to use Lombok during development as part of the exercise.
 
-> Note: You are not requested to implement any free text functionality or implement the rest methods to actually download the resource.
+> Note: You are not requested to implement any free text search functionality or implement the rest methods that would actually download the resource.
 
-> Note: The proposed solution uses also Mapstruct to decouple view from domain object. You are advised to also try to use this methodology, but as a second step 
+> Note: The proposed solution uses also Mapstruct to decouple view from domain object. You are advised to also try to use this methodology, but as a second step.
