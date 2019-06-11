@@ -7,12 +7,11 @@
 - Rest fits better with modern frontend technologies like Angular.
 - Server side has no concerns on the view part of the application.
 - Internationalization is mostly (and actually not even there) limited to error handling
+- This lecture will recap a lot of things we have learned already. It is based actually on two projects and multiple instances starting (very slowly) to mimic cloud development.
 
 
 
-> This lecture will include and utilize a lot of things we have learned already. It is based actually on two projects and multiple instances starting (very slowly) to mimic cloud development.
->
-> A friend bought a set of smart sensors and installed these around the house. We wish to grab the sensor readings from time to time and collect/aggregate these into an aggregation database. 
+> A friend bought a set of smart sensors and installed these around the house. We wish to grab the sensor readings from time to time and collect/aggregate these into an 'aggregation' database. 
 >
 > In future these readings will be processed. For the time being we need to create the sensor's data reading application and the aggregation application which will collect and store metrics from the sensors.
 
@@ -300,7 +299,7 @@ public interface SensorRepository extends JpaRepository<Sensor, String> {
   @Mapper(componentModel = "spring", uses = {SensorRepository.class})
 ```
   - `componentModel` Should be `spring` to be able to autowire.
-  - `uses` enables the opposite,  specify other mappers (or spring beans) the given mapper needs 
+  - `uses` enables to specify other mappers (or spring beans) the given mapper needs to use 
   - Methods:
 
 ```java
@@ -331,7 +330,7 @@ public interface SensorRepository extends JpaRepository<Sensor, String> {
   void addBackReference(@MappingTarget Metric metric, MetricDTO metricDTO) {...}
 ```
 
-- Examples and documentation are needed. Using mapstruct is not trivial exercise but over time pays off.
+- Examples and documentation are helpful since using mapstruct is not trivial exercise but over time pays off.
   
   https://github.com/mapstruct/mapstruct-examples
 ---
@@ -647,7 +646,7 @@ public class RestClient {
 
 **Enable Scheduling:**
 
-- Create a Executor of a 10 threads
+- Create an Executor of a 10 threads
   - 10 can/should be configurable of application.yml
 - Enable scheduling (`@EnableScheduling`)
 

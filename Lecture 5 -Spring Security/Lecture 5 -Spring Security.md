@@ -169,9 +169,7 @@ public class UserDetailsConfiguration {
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
     private final DaoAuthenticationProvider authenticationProvider;
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider);

@@ -61,13 +61,13 @@ Purpose of this lecture is to introduce User with the capabilities of Spring Boo
 
 ## Lecture 4 - Web
 
-Purpose of this lecture is to provide information on how a simple Rest interface can be exposed and how rest communication between two different services can also be accomplished.
+Purpose of this lecture is to provide information on how a simple Rest interface can be exposed and how rest communication between two different services can also be accomplished. Also scheduling inside a spring boot application is presented.
 
 ---
 
 ## Lecture 5 - Sprint Security
 
-In this lecture, spring security is explained. Audience is provided with the information of how to secure a web application using users which are stored into a database.
+In this lecture, spring security is explained. Audience is provided with the information of how to secure a web application using users which are stored into a database. The difference between authentication and authorization is explained. Spring security framework is connected with a JPA database to provide user management. Finally Http security and web security filters configuration is examined.
 
 ---
 
