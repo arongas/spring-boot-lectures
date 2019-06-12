@@ -5,7 +5,7 @@
 ## Importance of unit testing
 
 - Unit testing it self is a huge topic of equal importance of functional and non functional project features.
-- No one can persuade a person against unit testing and actually every team needs to find it way on how to increase code quality
+- No one can persuade a person to adapt unit testing creation and also every team needs to find it way on how to increase code quality
 
 
 ## Arguments against unit testing
