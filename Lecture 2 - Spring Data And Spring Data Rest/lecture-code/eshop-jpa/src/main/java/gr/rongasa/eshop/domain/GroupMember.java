@@ -33,5 +33,6 @@ public class GroupMember {
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name="group_infos", joinColumns= {@JoinColumn(name="group_id")},  inverseJoinColumns= {@JoinColumn(name="info_id")})
+    @Builder.Default
     private Set<GroupInfo> infoSet= new HashSet<>();
 }

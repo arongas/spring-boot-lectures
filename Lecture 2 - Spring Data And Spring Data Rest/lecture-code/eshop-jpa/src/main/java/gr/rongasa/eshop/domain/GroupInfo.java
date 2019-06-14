@@ -33,6 +33,7 @@ public class GroupInfo {
     private String name;
 
     @ManyToMany(mappedBy="infoSet")
+    @Builder.Default
     List<GroupMember> members = new ArrayList<>();
 
 }

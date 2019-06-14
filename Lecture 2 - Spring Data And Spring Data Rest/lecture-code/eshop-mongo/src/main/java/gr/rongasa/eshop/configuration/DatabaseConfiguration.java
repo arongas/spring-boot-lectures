@@ -13,6 +13,6 @@ public class DatabaseConfiguration {
 
     @Bean
     public CommandLineRunner stupidBean() {
-        return args -> log.info("JPA java code started");
+        return args -> log.info("Mongo java code started");
     }
 }
