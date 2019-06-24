@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "9415ede6-28ad-4782-84fb-cc5d53a0bdcc",
+		"name": "eshop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "list inventory",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/inventory",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inventory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add inventory",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"java ebook for briliant people\",\n\t\"type\": \"book\",\n\t\"amount\":100,\n\t\"description\":\"This is the best java book for the best of the best\",\n\t\"cost\": \"40.50\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/inventory",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inventory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modify inventory",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"java ebook for briliant people\",\n\t\"amount\":100,\n\t\"description\":\"This is the best java book for the best of the best developers\",\n\t\"cost\": \"40.50\",\n\t\"type\": \"book\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/inventory/upj7eGoBBqe35Dh4ugKU",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inventory",
+						"upj7eGoBBqe35Dh4ugKU"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete inventory",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/inventory/uZj7eGoBBqe35Dh4awKq",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inventory",
+						"uZj7eGoBBqe35Dh4awKq"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete index",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:9200/inventory",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"inventory"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

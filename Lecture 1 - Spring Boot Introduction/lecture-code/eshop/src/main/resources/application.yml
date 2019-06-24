@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: e-shop
+  data:
+    elasticsearch:
+      cluster-nodes: localhost:9300
